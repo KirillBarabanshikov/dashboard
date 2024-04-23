@@ -32,12 +32,7 @@ class BaseLayout extends StatelessWidget {
               return NavigationRailDestination(icon: item.icon, label: Text(item.label));
             }).toList(),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: child,
-            ),
-          ),
+          Expanded(child: child),
         ],
       ),
     );
