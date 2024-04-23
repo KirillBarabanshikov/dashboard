@@ -74,10 +74,71 @@ class IndicatorsPage extends StatelessWidget {
                 maxCrossAxisExtent: 600,
                 mainAxisSpacing: 25,
                 crossAxisSpacing: 25,
-                mainAxisExtent: 400,
+                childAspectRatio: 16 / 9,
               ),
               itemBuilder: (context, index) {
-                return const Card();
+                return const Card(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      children: [
+                        Text('Выручка', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10),
+                        Text('1 338 331 ₽', style: TextStyle(fontSize: 24, color: Colors.red, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10),
+                        Text('-42.6% (-992 тыс. ₽)', style: TextStyle(color: Colors.red)),
+                        Text('-36.5% (-769 тыс. ₽)', style: TextStyle(color: Colors.red)),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(children: [Text('Прогноз 2 362 082 ₽ (101.4%)', style: TextStyle(color: Colors.blueAccent))]),
+                        ),
+                        Divider(thickness: 4, color: Colors.blueAccent),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            LinearProgressIndicator(
+                              value: 0.5,
+                              minHeight: 25,
+                              color: Color.fromRGBO(245, 66, 29, 1),
+                              backgroundColor: Colors.transparent,
+                              borderRadius: BorderRadius.horizontal(right: Radius.circular(20)),
+                            ),
+                            Text('Факт 1 338 331 ₽'),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            LinearProgressIndicator(
+                              value: 1,
+                              minHeight: 25,
+                              color: Color.fromRGBO(180, 125, 255, 1),
+                              backgroundColor: Colors.transparent,
+                              borderRadius: BorderRadius.horizontal(right: Radius.circular(20)),
+                            ),
+                            Text('План 2 330 000 ₽ (57.4%)'),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            LinearProgressIndicator(
+                              value: 0.8,
+                              minHeight: 25,
+                              color: Color.fromRGBO(225, 227, 224, 1),
+                              backgroundColor: Colors.transparent,
+                              borderRadius: BorderRadius.horizontal(right: Radius.circular(20)),
+                            ),
+                            Text('LFL 2 107 222 ₽ (63.5%)'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               },
             ),
           ),
