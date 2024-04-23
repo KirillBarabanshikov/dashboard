@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class IndicatorsPage extends StatelessWidget {
   const IndicatorsPage({super.key});
@@ -27,25 +28,29 @@ class IndicatorsPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.all(25),
-                                  child: Text('Title'),
+                                  padding: EdgeInsets.all(20),
+                                  child: Text('Title', style: TextStyle(fontSize: 24)),
                                 ),
                                 const Divider(),
                                 Expanded(
                                   child: ListView.builder(
                                     itemCount: 5,
                                     itemBuilder: (context, index) {
-                                      return const ListTile(title: Text('Data'));
+                                      return ListTile(
+                                        title: const Text('Data'),
+                                        trailing: const Icon(Icons.check),
+                                        onTap: () {},
+                                      );
                                     },
                                   ),
                                 ),
                                 const Divider(),
                                 Padding(
-                                  padding: const EdgeInsets.all(25),
+                                  padding: const EdgeInsets.all(20),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      TextButton(onPressed: () {}, child: const Text('Отменить')),
+                                      TextButton(onPressed: () => context.pop(), child: const Text('Отменить')),
                                       const SizedBox(width: 15),
                                       TextButton(onPressed: () {}, child: const Text('Готово')),
                                     ],
@@ -69,7 +74,7 @@ class IndicatorsPage extends StatelessWidget {
           SliverPadding(
             padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
             sliver: SliverGrid.builder(
-              itemCount: 10,
+              itemCount: 8,
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 600,
                 mainAxisSpacing: 25,
@@ -90,10 +95,11 @@ class IndicatorsPage extends StatelessWidget {
                         Text('-36.5% (-769 тыс. ₽)', style: TextStyle(color: Colors.red)),
                         SizedBox(height: 20),
                         Padding(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(left: 10, bottom: 5),
                           child: Row(children: [Text('Прогноз 2 362 082 ₽ (101.4%)', style: TextStyle(color: Colors.blueAccent))]),
                         ),
                         Divider(thickness: 4, color: Colors.blueAccent),
+                        SizedBox(height: 5),
                         Stack(
                           alignment: Alignment.center,
                           children: [
