@@ -27,4 +27,7 @@ final theme = ThemeData(
     thickness: 1,
     space: 0,
   ),
+  inputDecorationTheme: const InputDecorationTheme(
+    border: OutlineInputBorder(),
+  ),
 );
