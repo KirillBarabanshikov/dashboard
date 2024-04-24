@@ -122,30 +122,77 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
               itemCount: 8,
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 600,
-                mainAxisSpacing: 25,
-                crossAxisSpacing: 25,
-                childAspectRatio: 16 / 9,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
+                mainAxisExtent: 310,
               ),
               itemBuilder: (context, index) {
-                return const Card(
+                return Card(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       children: [
-                        Text('Выручка', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10),
-                        Text('1 338 331 ₽', style: TextStyle(fontSize: 24, color: Colors.red, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10),
-                        Text('-42.6% (-992 тыс. ₽)', style: TextStyle(color: Colors.red)),
-                        Text('-36.5% (-769 тыс. ₽)', style: TextStyle(color: Colors.red)),
-                        SizedBox(height: 20),
-                        Padding(
+                        const Text('Выручка', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
+                        const Text('1 338 331 ₽', style: TextStyle(fontSize: 24, color: Colors.red, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: 5,
+                                  height: 20,
+                                  color: const Color.fromRGBO(180, 125, 255, 1),
+                                  alignment: Alignment.bottomCenter,
+                                ),
+                                const SizedBox(width: 3),
+                                Container(
+                                  width: 5,
+                                  height: 15,
+                                  color: Colors.red,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('-42.6% (-992 тыс. ₽)', style: TextStyle(color: Colors.red)),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: 5,
+                                  height: 20,
+                                  color: const Color.fromRGBO(225, 227, 224, 1),
+                                  alignment: Alignment.bottomCenter,
+                                ),
+                                const SizedBox(width: 3),
+                                Container(
+                                  width: 5,
+                                  height: 15,
+                                  color: Colors.red,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('-36.5% (-769 тыс. ₽)', style: TextStyle(color: Colors.red)),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        const Padding(
                           padding: EdgeInsets.only(left: 10, bottom: 5),
                           child: Row(children: [Text('Прогноз 2 362 082 ₽ (101.4%)', style: TextStyle(color: Colors.blueAccent))]),
                         ),
-                        Divider(thickness: 4, color: Colors.blueAccent),
-                        SizedBox(height: 5),
-                        Stack(
+                        const Divider(thickness: 4, color: Colors.blueAccent),
+                        const SizedBox(height: 5),
+                        const Stack(
                           alignment: Alignment.center,
                           children: [
                             LinearProgressIndicator(
@@ -158,8 +205,8 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                             Text('Факт 1 338 331 ₽'),
                           ],
                         ),
-                        SizedBox(height: 10),
-                        Stack(
+                        const SizedBox(height: 10),
+                        const Stack(
                           alignment: Alignment.center,
                           children: [
                             LinearProgressIndicator(
@@ -167,13 +214,13 @@ class _IndicatorsPageState extends State<IndicatorsPage> {
                               minHeight: 25,
                               color: Color.fromRGBO(180, 125, 255, 1),
                               backgroundColor: Colors.transparent,
-                              borderRadius: BorderRadius.horizontal(right: Radius.circular(20)),
+                              borderRadius: BorderRadius.horizontal(right: Radius.zero),
                             ),
                             Text('План 2 330 000 ₽ (57.4%)'),
                           ],
                         ),
-                        SizedBox(height: 10),
-                        Stack(
+                        const SizedBox(height: 10),
+                        const Stack(
                           alignment: Alignment.center,
                           children: [
                             LinearProgressIndicator(
