@@ -140,8 +140,8 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                   5: FixedColumnWidth(130),
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: const [
-                  TableRow(
+                children: [
+                  const TableRow(
                     children: [
                       TableCell(
                         child: Padding(
@@ -190,18 +190,30 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Center(child: Text('ВМТ, руб', textAlign: TextAlign.center)),
                         ),
-                      )
-                    ],
-                  ),
-                  TableRow(
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: Color.fromRGBO(235, 235, 235, 1)))),
-                    children: [
+                      ),
                       TableCell(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Center(child: Text('ВМТ, руб', textAlign: TextAlign.center)),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Center(child: Text('ВМТ, руб', textAlign: TextAlign.center)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  TableRow(
+                    decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: Color.fromRGBO(235, 235, 235, 1)))),
+                    children: [
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 children: [
                                   Text('1.'),
                                   SizedBox(width: 5),
@@ -209,6 +221,7 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                                     child: Text(
                                       'Ижевск, УР Ижевск Детство №54 ул.Воткинское шоссе, д.38, Воткинское',
                                       overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   SizedBox(width: 5),
@@ -216,12 +229,35 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                                 ],
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: 18),
+                                padding: const EdgeInsets.only(left: 18),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('1 339 015,4 ₽'),
-                                    Text('57% (-990 984,6 ₽)', style: TextStyle(color: Colors.red)),
+                                    const Text('1 339 015,4 ₽'),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              width: 5,
+                                              height: 20,
+                                              color: const Color.fromRGBO(180, 125, 255, 1),
+                                              alignment: Alignment.bottomCenter,
+                                            ),
+                                            const SizedBox(width: 3),
+                                            Container(
+                                              width: 5,
+                                              height: 15,
+                                              color: Colors.red,
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(width: 8),
+                                        const Text('57% (-990 984,6 ₽)', style: TextStyle(color: Colors.red, fontSize: 13)),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -229,7 +265,7 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                           ),
                         ),
                       ),
-                      TableCell(
+                      const TableCell(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Center(
@@ -242,7 +278,7 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                           ),
                         ),
                       ),
-                      TableCell(
+                      const TableCell(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Center(
@@ -255,7 +291,7 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                           ),
                         ),
                       ),
-                      TableCell(
+                      const TableCell(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Center(
@@ -268,7 +304,7 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                           ),
                         ),
                       ),
-                      TableCell(
+                      const TableCell(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Center(
@@ -281,7 +317,7 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                           ),
                         ),
                       ),
-                      TableCell(
+                      const TableCell(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Center(
@@ -294,7 +330,33 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
                           ),
                         ),
                       ),
-                      TableCell(
+                      const TableCell(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text('628 908,42 ₽'),
+                                Text('57%', style: TextStyle(color: Colors.red)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const TableCell(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text('628 908,42 ₽'),
+                                Text('57%', style: TextStyle(color: Colors.red)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const TableCell(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: Center(
