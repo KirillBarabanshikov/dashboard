@@ -21,7 +21,17 @@ class BaseLayout extends StatelessWidget {
     final currentIndex = _navigationItems.indexWhere((item) => item.path == currentPath);
 
     return Scaffold(
-      appBar: AppBar(title: Text(_navigationItems[currentIndex].label)),
+      appBar: AppBar(
+        title: Text(_navigationItems[currentIndex].label),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.sync)),
+          const SizedBox(width: 20),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.map_outlined)),
+          const SizedBox(width: 20),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
+          const SizedBox(width: 20),
+        ],
+      ),
       body: Row(
         children: [
           NavigationRail(

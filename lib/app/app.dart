@@ -10,6 +10,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Dashboard',
+      debugShowCheckedModeBanner: false,
       theme: theme,
       routerConfig: router,
     );
