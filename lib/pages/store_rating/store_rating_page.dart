@@ -1,91 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/widgets.dart';
+import '../../features/filter/filter.dart';
 
-const List<FilterItem> _filters = [
-  FilterItem(
-    name: 'plan',
-    title: 'План',
-    tiles: [
-      FilterTile(title: 'План/Факт', value: 'План/Факт'),
-      FilterTile(title: 'План/Прогноз', value: 'План/Прогноз'),
-    ],
-  ),
-  FilterItem(
-    name: 'indicator',
-    title: 'Показатели',
-    tiles: [
-      FilterTile(title: 'Выручка', value: 'Выручка'),
-      FilterTile(title: 'Кол-во продаж', value: 'Кол-во продаж'),
-      FilterTile(title: 'SMART товары, уп.', value: 'SMART товары, уп.'),
-      FilterTile(title: 'Доля чеков со SMART', value: 'Доля чеков со SMART'),
-    ],
-  ),
-  FilterItem(
-    name: 'date',
-    title: 'Даты',
-    tiles: [
-      FilterTile(title: 'Сегодня', value: 'Сегодня'),
-      FilterTile(title: 'Текущая неделя', value: 'Текущая неделя'),
-      FilterTile(title: 'Текущий месяц по вчера', value: 'Текущий месяц по вчера'),
-      FilterTile(title: 'Текущий месяц по сейчас', value: 'Текущий месяц по сейчас'),
-      FilterTile(title: 'Текущий месяц', value: 'Текущий месяц'),
-      FilterTile(title: 'Вчера', value: 'Вчера'),
-      FilterTile(title: 'Прошлый месяц', value: 'Прошлый месяц'),
-      FilterTile(title: 'Прошлая неделя', value: 'Прошлая неделя'),
-      FilterTile(title: 'Актуальный период', value: 'Актуальный период'),
-      FilterTile(title: 'Задать от и до', value: 'Задать от и до'),
-    ],
-  ),
-  FilterItem(
-    name: 'city',
-    title: 'Города',
-    tiles: [
-      FilterTile(title: 'Все города', value: 'Все города'),
-      FilterTile(title: 'Ижевск', value: 'Ижевск'),
-    ],
-  ),
-  FilterItem(
-    name: 'shop',
-    title: 'Торговые точки',
-    tiles: [
-      FilterTile(title: 'Все тогровые точки', value: 'Все тогровые точки'),
-      FilterTile(
-        title: 'УР Ижеквск Детство №54 ул.Воткинское шоссе, д.38, Воткинское',
-        value: 'УР Ижеквск Детство №54 ул.Воткинское шоссе, д.38, Воткинское',
-      ),
-    ],
-  ),
-  FilterItem(
-    name: 'level',
-    title: 'Уровни',
-    tiles: [
-      FilterTile(title: 'Все уровни', value: 'Все уровни'),
-      FilterTile(title: 'Свои Заведующие аптеками', value: 'Свои Заведующие аптеками'),
-      FilterTile(title: 'Все Заведующие аптеками', value: 'Все Заведующие аптеками'),
-      FilterTile(title: 'Все СПС', value: 'Все СПС'),
-    ],
-  ),
-  FilterItem(
-    name: 'subordinate',
-    title: 'Подчинённые',
-    tiles: [
-      FilterTile(title: 'Все подчинённые', value: 'Все подчинённые'),
-      FilterTile(title: 'Бодяга Алёна Ивановна', value: 'Бодяга Алёна Ивановна'),
-      FilterTile(title: 'Барабанщиков Кирилл Дмитриевич', value: 'Барабанщиков Кирилл Дмитриевич'),
-    ],
-  )
-];
-
-class StoreRatingPage extends StatefulWidget {
+class StoreRatingPage extends StatelessWidget {
   const StoreRatingPage({super.key});
-
-  @override
-  State<StoreRatingPage> createState() => _StoreRatingPageState();
-}
-
-class _StoreRatingPageState extends State<StoreRatingPage> {
-  final Map<String, String> selectedFilters = {};
 
   @override
   Widget build(BuildContext context) {
@@ -93,36 +11,9 @@ class _StoreRatingPageState extends State<StoreRatingPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: SizedBox(
-              height: 90,
-              child: ListView.separated(
-                itemCount: _filters.length,
-                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final filter = _filters[index];
-
-                  return OutlinedButton(
-                    onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) {
-                        return FilterDialog(
-                          filterItem: filter,
-                          search: ['subordinate', 'indicator'].contains(filter.name),
-                          defaultValue: selectedFilters[filter.name],
-                          onDone: (value) => setState(() {
-                            selectedFilters[filter.name] = value;
-                          }),
-                        );
-                      },
-                    ),
-                    child: Text(selectedFilters.containsKey(filter.name) ? selectedFilters[filter.name]! : filter.tiles.first.title),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(width: 10);
-                },
-              ),
+            child: FilterList(
+              items: const [Filters.plan, Filters.indicator, Filters.date, Filters.city, Filters.store, Filters.level, Filters.subordinate],
+              onChange: (filters) => print(filters),
             ),
           ),
           const SliverToBoxAdapter(child: Divider(height: 1)),

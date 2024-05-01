@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../model/model.dart';
+
 class FilterDialog extends StatefulWidget {
   const FilterDialog({
     super.key,
     required this.filterItem,
     this.defaultValue,
-    this.search = false,
-    required this.onDone,
+    required this.onChange,
   });
 
   final FilterItem filterItem;
   final String? defaultValue;
-  final bool search;
-  final Function(String value) onDone;
+  final void Function(String value) onChange;
 
   @override
   State<FilterDialog> createState() => _FilterDialogState();
@@ -43,7 +43,7 @@ class _FilterDialogState extends State<FilterDialog> {
               padding: const EdgeInsets.all(20),
               child: Text(widget.filterItem.title, style: const TextStyle(fontSize: 24)),
             ),
-            widget.search
+            widget.filterItem.search
                 ? Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
                     child: TextField(
@@ -81,7 +81,7 @@ class _FilterDialogState extends State<FilterDialog> {
                   TextButton(
                     onPressed: () {
                       context.pop();
-                      widget.onDone(selectedValue);
+                      widget.onChange(selectedValue);
                     },
                     child: const Text('Готово'),
                   ),
@@ -93,26 +93,4 @@ class _FilterDialogState extends State<FilterDialog> {
       ),
     );
   }
-}
-
-class FilterItem {
-  const FilterItem({
-    required this.name,
-    required this.title,
-    required this.tiles,
-  });
-
-  final String name;
-  final String title;
-  final List<FilterTile> tiles;
-}
-
-class FilterTile {
-  const FilterTile({
-    required this.title,
-    required this.value,
-  });
-
-  final String title;
-  final String value;
 }
