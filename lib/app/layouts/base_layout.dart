@@ -16,10 +16,7 @@ class BaseLayout extends StatelessWidget {
   final Widget child;
   final String currentPath;
 
-  @override
-  Widget build(BuildContext context) {
-    final currentIndex = _navigationItems.indexWhere((item) => item.path == currentPath);
-
+  Widget _buildDesktopLayout(BuildContext context, int currentIndex) {
     return Scaffold(
       appBar: AppBar(
         title: Text(_navigationItems[currentIndex].label),
@@ -45,6 +42,49 @@ class BaseLayout extends StatelessWidget {
           Expanded(child: child),
         ],
       ),
+    );
+  }
+
+  Widget _buildMobileLayout(BuildContext context, int currentIndex) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_navigationItems[currentIndex].label),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.map_outlined)),
+          const SizedBox(width: 10),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
+          const SizedBox(width: 10),
+        ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          return Future.delayed(const Duration(seconds: 1));
+        },
+        child: child,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        onTap: (index) => context.go(_navigationItems[index].path),
+        items: _navigationItems.map((item) {
+          return BottomNavigationBarItem(icon: item.icon, label: item.label);
+        }).toList(),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final currentIndex = _navigationItems.indexWhere((item) => item.path == currentPath);
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 768) {
+          return _buildDesktopLayout(context, currentIndex);
+        }
+        return _buildMobileLayout(context, currentIndex);
+      },
     );
   }
 }
