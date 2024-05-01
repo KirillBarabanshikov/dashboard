@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/filter/filter.dart';
+import '../../shared/constants/constants.dart';
 
 class StoreRatingPage extends StatelessWidget {
   const StoreRatingPage({super.key});
@@ -134,19 +135,19 @@ class StoreRatingPage extends StatelessWidget {
                                             Container(
                                               width: 5,
                                               height: 20,
-                                              color: const Color.fromRGBO(180, 125, 255, 1),
+                                              color: AppColors.purple,
                                               alignment: Alignment.bottomCenter,
                                             ),
                                             const SizedBox(width: 3),
                                             Container(
                                               width: 5,
                                               height: 15,
-                                              color: Colors.red,
+                                              color: AppColors.red,
                                             ),
                                           ],
                                         ),
                                         const SizedBox(width: 8),
-                                        const Text('57% (-990 984,6 ₽)', style: TextStyle(color: Colors.red, fontSize: 13)),
+                                        const Text('57% (-990 984,6 ₽)', style: TextStyle(color: AppColors.red, fontSize: 13)),
                                       ],
                                     ),
                                   ],
@@ -163,7 +164,7 @@ class StoreRatingPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text('2 395'),
-                                Text('55%', style: TextStyle(color: Colors.red)),
+                                Text('55%', style: TextStyle(color: AppColors.red)),
                               ],
                             ),
                           ),
@@ -176,7 +177,7 @@ class StoreRatingPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text('559,09 ₽'),
-                                Text('104%', style: TextStyle(color: Colors.green)),
+                                Text('104%', style: TextStyle(color: AppColors.green)),
                               ],
                             ),
                           ),
@@ -189,7 +190,7 @@ class StoreRatingPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text('2,28'),
-                                Text('100%', style: TextStyle(color: Colors.green)),
+                                Text('100%', style: TextStyle(color: AppColors.green)),
                               ],
                             ),
                           ),
@@ -202,7 +203,7 @@ class StoreRatingPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text('1,84'),
-                                Text('100%', style: TextStyle(color: Colors.green)),
+                                Text('100%', style: TextStyle(color: AppColors.green)),
                               ],
                             ),
                           ),
@@ -215,7 +216,7 @@ class StoreRatingPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text('628 908,42 ₽'),
-                                Text('57%', style: TextStyle(color: Colors.red)),
+                                Text('57%', style: TextStyle(color: AppColors.red)),
                               ],
                             ),
                           ),
@@ -228,7 +229,7 @@ class StoreRatingPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text('628 908,42 ₽'),
-                                Text('57%', style: TextStyle(color: Colors.red)),
+                                Text('57%', style: TextStyle(color: AppColors.red)),
                               ],
                             ),
                           ),
@@ -241,7 +242,7 @@ class StoreRatingPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text('628 908,42 ₽'),
-                                Text('57%', style: TextStyle(color: Colors.red)),
+                                Text('57%', style: TextStyle(color: AppColors.red)),
                               ],
                             ),
                           ),
@@ -254,7 +255,7 @@ class StoreRatingPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text('628 908,42 ₽'),
-                                Text('57%', style: TextStyle(color: Colors.red)),
+                                Text('57%', style: TextStyle(color: AppColors.red)),
                               ],
                             ),
                           ),
