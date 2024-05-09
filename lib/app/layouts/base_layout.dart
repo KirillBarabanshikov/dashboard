@@ -1,13 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../entities/session/session.dart';
 
 final _navigationItems = [
   const _NavigationItem(icon: Icon(Icons.bar_chart), label: 'Показатели', path: '/indicators'),
   const _NavigationItem(icon: Icon(Icons.trending_up), label: 'Рейтинг магазинов', path: '/store-rating'),
 ];
 
-class BaseLayout extends StatelessWidget {
+class BaseLayout extends ConsumerWidget {
   const BaseLayout({
     super.key,
     required this.child,
@@ -17,25 +19,36 @@ class BaseLayout extends StatelessWidget {
   final Widget child;
   final String currentPath;
 
-  Widget _buildDesktopLayout(BuildContext context, int currentIndex) {
+  Widget _buildDesktopLayout(BuildContext context, WidgetRef ref, int currentIndex) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
             MenuAnchor(
               builder: (context, controller, child) {
-                return GestureDetector(
-                  onTap: () => controller.isOpen ? controller.close() : controller.open(),
-                  child: const CircleAvatar(
+                return IconButton(
+                  onPressed: () => controller.isOpen ? controller.close() : controller.open(),
+                  padding: const EdgeInsets.all(5),
+                  icon: const CircleAvatar(
                     child: Text('КБ'),
                   ),
                 );
               },
               menuChildren: [
                 MenuItemButton(
+                  onPressed: () {},
+                  leadingIcon: const Icon(Icons.person),
+                  child: const Text('Профиль'),
+                ),
+                MenuItemButton(
                   onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
+                    await ref.read(sessionProvider).signOut();
                   },
+                  style: MenuItemButton.styleFrom(
+                    foregroundColor: Colors.red,
+                    iconColor: Colors.red,
+                  ),
+                  leadingIcon: const Icon(Icons.logout),
                   child: const Text('Выход'),
                 ),
               ],
@@ -99,13 +112,13 @@ class BaseLayout extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = _navigationItems.indexWhere((item) => item.path == currentPath);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth > 768) {
-          return _buildDesktopLayout(context, currentIndex);
+          return _buildDesktopLayout(context, ref, currentIndex);
         }
         return _buildMobileLayout(context, currentIndex);
       },
