@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "316809988683",
+    "project_id": "dashboard-f794a",
+    "storage_bucket": "dashboard-f794a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316809988683:android:69ada6c94d6d9189eb9bce",
+        "android_client_info": {
+          "package_name": "com.example.dashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw6Q63W0I0wJmKNin9sa6vR_GilG6SpbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

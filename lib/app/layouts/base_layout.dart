@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final _navigationItems = [
-  const _NavigationItem(icon: Icon(Icons.bar_chart), label: 'Показатели', path: '/'),
+  const _NavigationItem(icon: Icon(Icons.bar_chart), label: 'Показатели', path: '/indicators'),
   const _NavigationItem(icon: Icon(Icons.trending_up), label: 'Рейтинг магазинов', path: '/store-rating'),
 ];
 
@@ -19,7 +20,30 @@ class BaseLayout extends StatelessWidget {
   Widget _buildDesktopLayout(BuildContext context, int currentIndex) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_navigationItems[currentIndex].label),
+        title: Row(
+          children: [
+            MenuAnchor(
+              builder: (context, controller, child) {
+                return GestureDetector(
+                  onTap: () => controller.isOpen ? controller.close() : controller.open(),
+                  child: const CircleAvatar(
+                    child: Text('КБ'),
+                  ),
+                );
+              },
+              menuChildren: [
+                MenuItemButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                  },
+                  child: const Text('Выход'),
+                ),
+              ],
+            ),
+            const SizedBox(width: 15),
+            Text(_navigationItems[currentIndex].label),
+          ],
+        ),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.sync)),
           const SizedBox(width: 20),
