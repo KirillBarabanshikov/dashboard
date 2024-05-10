@@ -8,6 +8,8 @@ import '../../shared/constants/constants.dart';
 final _navigationItems = [
   _NavigationItem(icon: const Icon(Icons.bar_chart), label: 'Показатели', path: Routes.indicators.path),
   _NavigationItem(icon: const Icon(Icons.trending_up), label: 'Рейтинг магазинов', path: Routes.storeRating.path),
+  _NavigationItem(icon: const Icon(Icons.assignment_turned_in_outlined), label: 'Мои задачи', path: Routes.tasks.path),
+  _NavigationItem(icon: const Icon(Icons.forum_outlined), label: 'Сообщения', path: Routes.messages.path),
 ];
 
 class BaseLayout extends ConsumerWidget {
