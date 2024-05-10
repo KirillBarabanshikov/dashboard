@@ -1,23 +1,21 @@
+import 'package:dashboard/shared/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../entities/session/session.dart';
-import '../../../../shared/constants/constants.dart';
+import '../../../../shared/providers/providers.dart';
 
-class LoginForm extends ConsumerStatefulWidget {
-  const LoginForm({super.key});
+class ResetPasswordForm extends ConsumerStatefulWidget {
+  const ResetPasswordForm({super.key});
 
   @override
   ConsumerState createState() => _LoginFormState();
 }
 
-class _LoginFormState extends ConsumerState<LoginForm> {
+class _LoginFormState extends ConsumerState<ResetPasswordForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _isPasswordVisible = false;
   bool _isLoading = false;
 
   Future<void> _onSubmit() async {
@@ -25,7 +23,20 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
     try {
       setState(() => _isLoading = true);
-      await ref.read(sessionProvider).signIn(email: _emailController.text, password: _passwordController.text);
+      await ref.read(firebaseAuthProvider).sendPasswordResetEmail(email: _emailController.text);
+      if (!mounted) return;
+      context.go(Routes.main.path);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.green.shade500,
+          content: Text(
+            'Письмо отравлено ${_emailController.text}',
+            style: const TextStyle(fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -54,13 +65,24 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Вход',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () => context.go(Routes.main.path),
+                icon: const Icon(Icons.arrow_back),
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                'Сброс пароля',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
+          const SizedBox(height: 20),
+          const Text('Укажите электронную почту, которую вы использовали, чтобы сбросить пароль'),
           const SizedBox(height: 20),
           TextFormField(
             controller: _emailController,
@@ -71,24 +93,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
             validator: (value) {
               if (value!.isEmpty) return 'Введите e-mail';
               if (!value.contains('@')) return 'Введите корректный e-mail';
-              return null;
-            },
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            controller: _passwordController,
-            decoration: InputDecoration(
-              labelText: 'Пароль',
-              suffixIcon: IconButton(
-                onPressed: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
-                icon: Icon(_isPasswordVisible ? Icons.visibility_off : Icons.visibility),
-              ),
-            ),
-            obscureText: !_isPasswordVisible,
-            keyboardType: TextInputType.visiblePassword,
-            textInputAction: TextInputAction.done,
-            validator: (value) {
-              if (value!.isEmpty) return 'Введите пароль';
               return null;
             },
           ),
@@ -107,17 +111,9 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                       child: CircularProgressIndicator(color: Colors.white),
                     )
                   : const Text(
-                      'Войти',
+                      'Сбросить',
                       style: TextStyle(color: Colors.white),
                     ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () => context.go(Routes.resetPassword.path),
-              child: const Text('Забыли пароль?'),
             ),
           ),
         ],

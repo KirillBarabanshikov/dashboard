@@ -22,7 +22,16 @@ class SessionProvider {
     try {
       return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw Exception(e);
+      switch (e.code) {
+        case 'invalid-credential':
+          throw FirebaseAuthException(code: e.code, message: 'Пользователь не найден');
+        case 'invalid-email':
+          throw FirebaseAuthException(code: e.code, message: 'Неверный email');
+        case 'too-many-requests':
+          throw FirebaseAuthException(code: e.code, message: 'Слишком много попыток, попробуйте позже');
+        default:
+          throw FirebaseAuthException(code: e.code, message: 'Что-то пошло не так');
+      }
     }
   }
 

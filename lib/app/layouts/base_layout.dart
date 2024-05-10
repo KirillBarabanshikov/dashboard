@@ -3,10 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../entities/session/session.dart';
+import '../../shared/constants/constants.dart';
 
 final _navigationItems = [
-  const _NavigationItem(icon: Icon(Icons.bar_chart), label: 'Показатели', path: '/indicators'),
-  const _NavigationItem(icon: Icon(Icons.trending_up), label: 'Рейтинг магазинов', path: '/store-rating'),
+  _NavigationItem(icon: const Icon(Icons.bar_chart), label: 'Показатели', path: Routes.indicators.path),
+  _NavigationItem(icon: const Icon(Icons.trending_up), label: 'Рейтинг магазинов', path: Routes.storeRating.path),
 ];
 
 class BaseLayout extends ConsumerWidget {

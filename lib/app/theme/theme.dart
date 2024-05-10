@@ -1,3 +1,4 @@
+import 'package:dashboard/shared/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/constants/app_colors.dart';
@@ -5,8 +6,8 @@ import '../../shared/constants/app_colors.dart';
 final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: AppColors.primary,
-    primary: AppColors.primary,
+    seedColor: Colors.orangeAccent,
+    primary: Colors.orangeAccent,
     background: AppColors.background,
     surfaceTint: Colors.transparent,
   ),
