@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/constants/app_colors.dart';
+
 final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.orangeAccent,
-    background: const Color.fromRGBO(242, 242, 242, 1),
+    seedColor: AppColors.primary,
+    primary: AppColors.primary,
+    background: AppColors.background,
     surfaceTint: Colors.transparent,
   ),
-  scaffoldBackgroundColor: const Color.fromRGBO(242, 242, 242, 1),
+  scaffoldBackgroundColor: AppColors.background,
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       foregroundColor: const Color.fromRGBO(100, 100, 100, 1),

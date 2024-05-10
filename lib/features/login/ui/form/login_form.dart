@@ -58,6 +58,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               ),
             ),
             obscureText: !_isPasswordVisible,
+            keyboardType: TextInputType.visiblePassword,
             textInputAction: TextInputAction.done,
           ),
           const SizedBox(height: 20),
