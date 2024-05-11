@@ -76,7 +76,14 @@ class BaseLayout extends ConsumerWidget {
             labelType: NavigationRailLabelType.all,
             onDestinationSelected: (index) => context.go(_navigationItems[index].path),
             destinations: _navigationItems.map((item) {
-              return NavigationRailDestination(icon: item.icon, label: Text(item.label));
+              return NavigationRailDestination(
+                icon: Badge(
+                  isLabelVisible: item.path == Routes.messages.path,
+                  label: const Text('7'),
+                  child: item.icon,
+                ),
+                label: Text(item.label),
+              );
             }).toList(),
           ),
           Expanded(child: child),
