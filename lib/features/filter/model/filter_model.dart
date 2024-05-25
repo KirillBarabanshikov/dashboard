@@ -7,6 +7,7 @@ enum Filters {
   subordinate,
   plan,
   indicator,
+  block,
 }
 
 class FilterItem {
@@ -30,5 +31,5 @@ class FilterTile {
   });
 
   final String title;
-  final String value;
+  final dynamic value;
 }

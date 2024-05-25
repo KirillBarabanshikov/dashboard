@@ -34,4 +34,17 @@ final theme = ThemeData(
   inputDecorationTheme: const InputDecorationTheme(
     border: OutlineInputBorder(),
   ),
+  badgeTheme: BadgeThemeData(
+    backgroundColor: Colors.orange.shade900,
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    selectedItemColor: Colors.orangeAccent,
+    unselectedItemColor: Colors.black,
+    type: BottomNavigationBarType.fixed,
+  ),
+  dialogTheme: DialogTheme(),
 );
+
+class StyleText {
+  static const px14 = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+}

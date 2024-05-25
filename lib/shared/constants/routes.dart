@@ -5,6 +5,7 @@ enum Routes {
   storeRating(path: '/store-rating'),
   tasks(path: '/tasks'),
   messages(path: '/messages'),
+  users(path: '/users'),
   ;
 
   const Routes({
@@ -12,4 +13,6 @@ enum Routes {
   });
 
   final String path;
+
+  String get getPath => path;
 }

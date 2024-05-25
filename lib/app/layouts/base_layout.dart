@@ -1,3 +1,5 @@
+import 'package:dashboard/entities/user/provider/provider.dart';
+import 'package:dashboard/features/user/create/create.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,10 +8,36 @@ import '../../entities/session/session.dart';
 import '../../shared/constants/constants.dart';
 
 final _navigationItems = [
-  _NavigationItem(icon: const Icon(Icons.bar_chart), label: 'Показатели', path: Routes.indicators.path),
-  _NavigationItem(icon: const Icon(Icons.trending_up), label: 'Рейтинг магазинов', path: Routes.storeRating.path),
-  _NavigationItem(icon: const Icon(Icons.assignment_turned_in_outlined), label: 'Мои задачи', path: Routes.tasks.path),
-  _NavigationItem(icon: const Icon(Icons.forum_outlined), label: 'Сообщения', path: Routes.messages.path),
+  _NavigationItem(
+    icon: const Icon(Icons.bar_chart),
+    label: 'Показатели',
+    path: Routes.indicators.path,
+    actions: [],
+  ),
+  _NavigationItem(
+    icon: const Icon(Icons.trending_up),
+    label: 'Рейтинг магазинов',
+    path: Routes.storeRating.path,
+    actions: [],
+  ),
+  _NavigationItem(
+    icon: const Icon(Icons.assignment_turned_in_outlined),
+    label: 'Мои задачи',
+    path: Routes.tasks.path,
+    actions: [],
+  ),
+  _NavigationItem(
+    icon: const Icon(Icons.forum_outlined),
+    label: 'Сообщения',
+    path: Routes.messages.path,
+    actions: [],
+  ),
+  _NavigationItem(
+    icon: const Icon(Icons.group),
+    label: 'Подчинённые',
+    path: Routes.users.path,
+    actions: [],
+  ),
 ];
 
 class BaseLayout extends ConsumerWidget {
@@ -21,6 +49,34 @@ class BaseLayout extends ConsumerWidget {
 
   final Widget child;
   final String currentPath;
+
+  Future<void> onRefreshData(WidgetRef ref) async {
+    switch (currentPath) {
+      case '/users':
+        ref.read(usersProvider.notifier).ref.invalidateSelf();
+    }
+  }
+
+  List<Widget> _buildActions(BuildContext context) {
+    switch (currentPath) {
+      case '/users':
+        return [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const CreateUserDialog();
+                },
+              );
+            },
+            icon: const Icon(Icons.add),
+          )
+        ];
+      default:
+        return [];
+    }
+  }
 
   Widget _buildDesktopLayout(BuildContext context, WidgetRef ref, int currentIndex) {
     return Scaffold(
@@ -61,11 +117,9 @@ class BaseLayout extends ConsumerWidget {
           ],
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.sync)),
+          IconButton(onPressed: () => onRefreshData(ref), icon: const Icon(Icons.sync)),
           const SizedBox(width: 20),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.map_outlined)),
-          const SizedBox(width: 20),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
+          ..._buildActions(context),
           const SizedBox(width: 20),
         ],
       ),
@@ -92,21 +146,16 @@ class BaseLayout extends ConsumerWidget {
     );
   }
 
-  Widget _buildMobileLayout(BuildContext context, int currentIndex) {
+  Widget _buildMobileLayout(BuildContext context, WidgetRef ref, int currentIndex) {
     return Scaffold(
       appBar: AppBar(
         title: Text(_navigationItems[currentIndex].label),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.map_outlined)),
-          const SizedBox(width: 10),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
-          const SizedBox(width: 10),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () async {
-          return Future.delayed(const Duration(seconds: 1));
-        },
+        onRefresh: () => onRefreshData(ref),
         child: child,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -130,20 +179,17 @@ class BaseLayout extends ConsumerWidget {
         if (constraints.maxWidth > 768) {
           return _buildDesktopLayout(context, ref, currentIndex);
         }
-        return _buildMobileLayout(context, currentIndex);
+        return _buildMobileLayout(context, ref, currentIndex);
       },
     );
   }
 }
 
 class _NavigationItem {
-  const _NavigationItem({
-    required this.icon,
-    required this.label,
-    required this.path,
-  });
+  const _NavigationItem({required this.icon, required this.label, required this.path, required this.actions});
 
   final Widget icon;
   final String label;
   final String path;
+  final List<Widget> actions;
 }

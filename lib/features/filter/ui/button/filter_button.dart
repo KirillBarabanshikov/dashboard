@@ -28,7 +28,9 @@ class FilterButton extends StatelessWidget {
           );
         },
       ),
-      child: Text(selectedFilters.containsKey(filterItem.name) ? selectedFilters[filterItem.name]! : filterItem.tiles.first.title),
+      child: Text(selectedFilters.containsKey(filterItem.name)
+          ? filterItem.tiles.firstWhere((element) => element.value == selectedFilters[filterItem.name]).title
+          : filterItem.tiles.first.title),
     );
   }
 }

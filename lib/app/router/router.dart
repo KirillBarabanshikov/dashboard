@@ -19,6 +19,7 @@ final _authenticatedPaths = [
   Routes.storeRating.path,
   Routes.tasks.path,
   Routes.messages.path,
+  Routes.users.path,
 ];
 
 @riverpod
@@ -83,6 +84,12 @@ GoRouter router(RouterRef ref) {
             path: Routes.messages.path,
             builder: (context, state) {
               return const MessagesPage();
+            },
+          ),
+          GoRoute(
+            path: Routes.users.path,
+            builder: (context, state) {
+              return const UsersPage();
             },
           ),
         ],
