@@ -29,7 +29,7 @@ class UsersPage extends ConsumerWidget {
                 return SliverGrid.builder(
                   itemCount: data.length,
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 600,
+                    maxCrossAxisExtent: 500,
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 20,
                     mainAxisExtent: 310,
