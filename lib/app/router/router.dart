@@ -1,6 +1,4 @@
 import 'package:dashboard/shared/providers/firebase_providers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,18 +18,19 @@ final _authenticatedPaths = [
   Routes.tasks.path,
   Routes.messages.path,
   Routes.users.path,
+  Routes.profile.path,
 ];
 
 @riverpod
 GoRouter router(RouterRef ref) {
-  final ValueNotifier<User?> authStateNotifier = ValueNotifier(null);
-
-  ref.listen(authStateChangesProvider, (_, state) {
-    authStateNotifier.value = state.value;
-  });
+  // final ValueNotifier<User?> authStateNotifier = ValueNotifier(null);
+  //
+  // ref.listen(authStateChangesProvider, (_, state) {
+  //   authStateNotifier.value = state.value;
+  // });
 
   final router = GoRouter(
-    refreshListenable: authStateNotifier,
+    // refreshListenable: authStateNotifier,
     redirect: (context, state) {
       final isAuth = ref.read(firebaseAuthProvider).currentUser != null;
       if (isAuth) {
@@ -52,6 +51,12 @@ GoRouter router(RouterRef ref) {
         path: Routes.resetPassword.path,
         builder: (context, state) {
           return const ResetPasswordPage();
+        },
+      ),
+      GoRoute(
+        path: Routes.profile.path,
+        builder: (context, state) {
+          return const ProfilePage();
         },
       ),
       ShellRoute(

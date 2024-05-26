@@ -31,7 +31,10 @@ class UserCard extends ConsumerWidget {
           children: [
             Row(
               children: [
-                UserAvatar(user: user),
+                UserAvatar(
+                  displayName: user.displayName,
+                  photoUrl: user.displayName,
+                ),
                 const SizedBox(width: 10),
                 Flexible(
                   fit: FlexFit.tight,

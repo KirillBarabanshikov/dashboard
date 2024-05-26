@@ -26,6 +26,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
     try {
       setState(() => _isLoading = true);
       await ref.read(sessionProvider).signIn(email: _emailController.text, password: _passwordController.text);
+      if (mounted) context.go(Routes.indicators.path);
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -39,8 +40,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
           ),
         ),
       );
-    } finally {
-      setState(() => _isLoading = false);
     }
   }
 

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../entities/session/session.dart';
 import '../../shared/constants/constants.dart';
+import '../../widgets/widget.dart';
 
 final _navigationItems = [
   _NavigationItem(
@@ -83,35 +83,7 @@ class BaseLayout extends ConsumerWidget {
       appBar: AppBar(
         title: Row(
           children: [
-            MenuAnchor(
-              builder: (context, controller, child) {
-                return IconButton(
-                  onPressed: () => controller.isOpen ? controller.close() : controller.open(),
-                  padding: const EdgeInsets.all(5),
-                  icon: const CircleAvatar(
-                    child: Text('КБ'),
-                  ),
-                );
-              },
-              menuChildren: [
-                MenuItemButton(
-                  onPressed: () {},
-                  leadingIcon: const Icon(Icons.person),
-                  child: const Text('Профиль'),
-                ),
-                MenuItemButton(
-                  onPressed: () async {
-                    await ref.read(sessionProvider).signOut();
-                  },
-                  style: MenuItemButton.styleFrom(
-                    foregroundColor: Colors.red,
-                    iconColor: Colors.red,
-                  ),
-                  leadingIcon: const Icon(Icons.logout),
-                  child: const Text('Выход'),
-                ),
-              ],
-            ),
+            const UserMenu(),
             const SizedBox(width: 15),
             Text(_navigationItems[currentIndex].label),
           ],

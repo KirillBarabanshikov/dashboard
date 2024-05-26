@@ -6,6 +6,7 @@ enum Routes {
   tasks(path: '/tasks'),
   messages(path: '/messages'),
   users(path: '/users'),
+  profile(path: '/profile'),
   ;
 
   const Routes({
