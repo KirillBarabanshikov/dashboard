@@ -97,11 +97,11 @@ final List<FilterItem> filterData = [
   ),
   FilterItem(
     name: Filters.block.name,
-    title: 'Пользователи',
+    title: 'Сотрудники',
     tiles: const [
       FilterTile(title: 'Все пользователи', value: ''),
-      FilterTile(title: 'Заблокированные', value: false),
-      FilterTile(title: 'Активные', value: true),
+      FilterTile(title: 'Заблокированные', value: 'inactive'),
+      FilterTile(title: 'Активные', value: 'active'),
     ],
   ),
 ];

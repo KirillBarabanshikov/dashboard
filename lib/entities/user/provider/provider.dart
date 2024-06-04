@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mail_server/flutter_mail_server.dart';
 import 'package:random_string/random_string.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -31,6 +33,32 @@ class Users extends _$Users {
       'createdAt': DateTime.now().millisecondsSinceEpoch,
       'isBlocked': false,
     });
+
+    Mailer().sendEmail(
+      'Кирилл Барабанщиков',
+      'lilkirill2020@gmail.com',
+      'message',
+      'kirill24@gmail.com',
+      'receiverCC',
+      const AlertDialog(
+        title: Text("Message"),
+        content: Text(
+          "failed to send email",
+          style: TextStyle(
+            color: Colors.red,
+          ),
+        ),
+      ),
+      const AlertDialog(
+        title: Text("Message"),
+        content: Text(
+          "email sent successfuly",
+          style: TextStyle(
+            color: Colors.green,
+          ),
+        ),
+      ),
+    );
 
     ref.invalidateSelf();
   }

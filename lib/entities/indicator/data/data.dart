@@ -1,7 +1,7 @@
 import '../model/model.dart';
 
 const List<Indicator> indicatorsData = [
-  Indicator(title: 'Выручка', fact: 1338331, plan: 2362082, lfl: 2107222, forecast: 2362082),
+  Indicator(title: 'Выручка', fact: 1338331, plan: 2330000, lfl: 2107222, forecast: 2362082),
   Indicator(title: 'Кол-во продаж', fact: 2393, plan: 4317, lfl: 4542, forecast: 4409),
   Indicator(title: 'SMART товары, уп.', fact: 231, plan: 404, lfl: 296, forecast: 406),
   Indicator(title: 'Доля чеков со SMART-товарами', fact: 8.7, plan: 9.3, lfl: 6.0),

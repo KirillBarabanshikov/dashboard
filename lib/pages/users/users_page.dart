@@ -26,8 +26,10 @@ class UsersPage extends ConsumerWidget {
             padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
             sliver: asyncUsers.when(
               data: (data) {
+                final users = data;
+
                 return SliverGrid.builder(
-                  itemCount: data.length,
+                  itemCount: users.length,
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 500,
                     mainAxisSpacing: 20,
@@ -36,7 +38,10 @@ class UsersPage extends ConsumerWidget {
                   ),
                   itemBuilder: (context, index) {
                     final user = data[index];
-                    return UserCard(user: user);
+                    return UserCard(
+                      user: user,
+                      key: ValueKey(user.uid),
+                    );
                   },
                 );
               },

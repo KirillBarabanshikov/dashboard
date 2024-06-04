@@ -40,6 +40,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
           ),
         ),
       );
+    } finally {
+      setState(() => _isLoading = false);
     }
   }
 

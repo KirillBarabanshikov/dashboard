@@ -28,6 +28,62 @@ class ProfilePage extends ConsumerWidget {
           const SizedBox(width: 20),
         ],
       ),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 30, left: 50, right: 50, top: 30),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 200,
+              height: 200,
+              child: Image.asset(
+                'images/profile.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 50),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        'Барабанщиков Кирилл Дмириевич',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Expanded(child: SizedBox()),
+                      FilledButton(
+                        onPressed: () {},
+                        child: const Row(
+                          children: [
+                            Icon(Icons.edit),
+                            SizedBox(width: 5),
+                            Text('Редактировать профиль'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 25),
+                  Text('Дата рождения:', style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
+                  const Text('24.02.2004', style: TextStyle(fontSize: 16)),
+                  const SizedBox(height: 20),
+                  Text('E-mail:', style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
+                  const Text('lilkirill2020@gmail.com', style: TextStyle(fontSize: 16)),
+                  const SizedBox(height: 20),
+                  Text('Телефон', style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
+                  const Text('89828167454', style: TextStyle(fontSize: 16)),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

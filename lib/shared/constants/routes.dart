@@ -2,7 +2,7 @@ enum Routes {
   main(path: '/'),
   resetPassword(path: '/reset-password'),
   indicators(path: '/indicators'),
-  storeRating(path: '/store-rating'),
+  storeRating(path: '/drugstores'),
   tasks(path: '/tasks'),
   messages(path: '/messages'),
   users(path: '/users'),

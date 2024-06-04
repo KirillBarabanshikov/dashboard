@@ -1,4 +1,6 @@
 import 'package:dashboard/entities/user/provider/provider.dart';
+import 'package:dashboard/features/drugstore/create/create.dart';
+import 'package:dashboard/features/task/create/create.dart';
 import 'package:dashboard/features/user/create/create.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,8 +17,8 @@ final _navigationItems = [
     actions: [],
   ),
   _NavigationItem(
-    icon: const Icon(Icons.trending_up),
-    label: 'Рейтинг магазинов',
+    icon: const Icon(Icons.store),
+    label: 'Аптеки',
     path: Routes.storeRating.path,
     actions: [],
   ),
@@ -26,15 +28,15 @@ final _navigationItems = [
     path: Routes.tasks.path,
     actions: [],
   ),
-  _NavigationItem(
-    icon: const Icon(Icons.forum_outlined),
-    label: 'Сообщения',
-    path: Routes.messages.path,
-    actions: [],
-  ),
+  // _NavigationItem(
+  //   icon: const Icon(Icons.forum_outlined),
+  //   label: 'Сообщения',
+  //   path: Routes.messages.path,
+  //   actions: [],
+  // ),
   _NavigationItem(
     icon: const Icon(Icons.group),
-    label: 'Подчинённые',
+    label: 'Сотрудники',
     path: Routes.users.path,
     actions: [],
   ),
@@ -59,6 +61,20 @@ class BaseLayout extends ConsumerWidget {
 
   List<Widget> _buildActions(BuildContext context) {
     switch (currentPath) {
+      case '/indicators':
+        return [
+          // IconButton(
+          //   onPressed: () {
+          //     showDialog(
+          //       context: context,
+          //       builder: (context) {
+          //         return Container();
+          //       },
+          //     );
+          //   },
+          //   icon: const Icon(Icons.edit),
+          // )
+        ];
       case '/users':
         return [
           IconButton(
@@ -67,6 +83,34 @@ class BaseLayout extends ConsumerWidget {
                 context: context,
                 builder: (context) {
                   return const CreateUserDialog();
+                },
+              );
+            },
+            icon: const Icon(Icons.add),
+          )
+        ];
+      case '/tasks':
+        return [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const CreateTaskDialog();
+                },
+              );
+            },
+            icon: const Icon(Icons.add),
+          )
+        ];
+      case '/drugstores':
+        return [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const CreateDrugstoreDialog();
                 },
               );
             },
@@ -90,7 +134,7 @@ class BaseLayout extends ConsumerWidget {
         ),
         actions: [
           IconButton(onPressed: () => onRefreshData(ref), icon: const Icon(Icons.sync)),
-          const SizedBox(width: 20),
+          const SizedBox(width: 10),
           ..._buildActions(context),
           const SizedBox(width: 20),
         ],

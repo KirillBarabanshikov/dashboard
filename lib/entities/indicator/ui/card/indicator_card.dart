@@ -28,6 +28,7 @@ class IndicatorCard extends StatelessWidget {
     final String lfl = _currentFormat(indicator.lfl);
     final String? forecast = indicator.forecast != null ? _currentFormat(indicator.forecast!) : null;
     final isPositive = indicator.fact > indicator.plan;
+    final percent = indicator.fact - indicator.plan;
 
     return Card(
       child: Padding(
@@ -66,7 +67,7 @@ class IndicatorCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(width: 8),
-                const Text('-42.6% (-992 тыс. ₽)', style: TextStyle(color: AppColors.red)),
+                Text('-42.6% (${percent.round()} -992 тыс. ₽)', style: TextStyle(color: AppColors.red)),
               ],
             ),
             const SizedBox(height: 5),
