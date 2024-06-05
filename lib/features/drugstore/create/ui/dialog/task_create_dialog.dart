@@ -1,11 +1,13 @@
+import 'package:dashboard/entities/drugstore/model.dart';
+import 'package:dashboard/entities/drugstore/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../entities/user/user.dart';
-
 class CreateDrugstoreDialog extends ConsumerStatefulWidget {
-  const CreateDrugstoreDialog({super.key});
+  const CreateDrugstoreDialog({super.key, this.drugstore});
+
+  final DrugstoreModel? drugstore;
 
   @override
   ConsumerState createState() => _CreateUserDialogState();
@@ -13,8 +15,12 @@ class CreateDrugstoreDialog extends ConsumerStatefulWidget {
 
 class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _nameController = TextEditingController();
+  late TextEditingController _nameController;
+  late TextEditingController _brandController;
+  late TextEditingController _regionController;
+  late TextEditingController _cityController;
+  late TextEditingController _addressController;
+  late TextEditingController _descController;
   bool _isLoading = false;
 
   Future<void> _onSubmit() async {
@@ -22,10 +28,29 @@ class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
 
     try {
       setState(() => _isLoading = true);
-      await ref.read(usersProvider.notifier).create(
-            _emailController.text.trim(),
-            _nameController.text.trim(),
-          );
+
+      if (widget.drugstore == null) {
+        await ref.read(drugstoresProvider.notifier).create(DrugstoreModel(
+              id: '0',
+              address: _addressController.text.trim(),
+              brand: _brandController.text.trim(),
+              city: _cityController.text.trim(),
+              description: _descController.text.trim(),
+              name: _nameController.text.trim(),
+              region: _regionController.text.trim(),
+              createdAt: DateTime.now().millisecondsSinceEpoch,
+            ));
+      } else {
+        await ref.read(drugstoresProvider.notifier).edit(DrugstoreModel(
+            id: widget.drugstore!.id,
+            address: _addressController.text.trim(),
+            brand: _brandController.text.trim(),
+            city: _cityController.text.trim(),
+            description: _descController.text.trim(),
+            name: _nameController.text.trim(),
+            region: _regionController.text.trim(),
+            createdAt: widget.drugstore!.createdAt));
+      }
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -46,71 +71,85 @@ class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.drugstore?.name);
+    _brandController = TextEditingController(text: widget.drugstore?.brand);
+    _regionController = TextEditingController(text: widget.drugstore?.region);
+    _cityController = TextEditingController(text: widget.drugstore?.city);
+    _addressController = TextEditingController(text: widget.drugstore?.address);
+    _descController = TextEditingController(text: widget.drugstore?.description);
+  }
+
+  @override
   void dispose() {
     super.dispose();
-    _emailController.dispose();
     _nameController.dispose();
+    _brandController.dispose();
+    _regionController.dispose();
+    _cityController.dispose();
+    _addressController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Добавить аптеку'),
+      title: Text(widget.drugstore == null ? 'Добавить аптеку' : 'Изменить аптеку'),
       content: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 500),
+        constraints: const BoxConstraints(minWidth: 500, maxWidth: 500),
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
-                controller: _emailController,
+                controller: _nameController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите e-mail';
-                  if (!value.contains('@')) return 'Введите корректный e-mail';
+                  if (value!.isEmpty) return 'Введите название';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Название'),
               ),
               const SizedBox(height: 15),
               TextFormField(
-                controller: _emailController,
+                controller: _brandController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите e-mail';
-                  if (!value.contains('@')) return 'Введите корректный e-mail';
+                  if (value!.isEmpty) return 'Введите бренд';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Бренд'),
               ),
               const SizedBox(height: 15),
               TextFormField(
-                controller: _emailController,
+                controller: _regionController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите e-mail';
-                  if (!value.contains('@')) return 'Введите корректный e-mail';
+                  if (value!.isEmpty) return 'Введите регион';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Регион'),
               ),
               const SizedBox(height: 15),
               TextFormField(
-                controller: _emailController,
+                controller: _cityController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите e-mail';
-                  if (!value.contains('@')) return 'Введите корректный e-mail';
+                  if (value!.isEmpty) return 'Введите город';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Город'),
               ),
               const SizedBox(height: 15),
               TextFormField(
-                controller: _emailController,
+                controller: _addressController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите e-mail';
-                  if (!value.contains('@')) return 'Введите корректный e-mail';
+                  if (value!.isEmpty) return 'Введите адрес';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Адрес'),
+              ),
+              const SizedBox(height: 15),
+              TextFormField(
+                controller: _descController,
+                decoration: const InputDecoration(labelText: 'Описание'),
               ),
             ],
           ),
