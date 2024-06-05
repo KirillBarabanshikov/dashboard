@@ -1,11 +1,13 @@
+import 'package:dashboard/entities/task/model.dart';
+import 'package:dashboard/entities/task/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../entities/user/user.dart';
-
 class CreateTaskDialog extends ConsumerStatefulWidget {
-  const CreateTaskDialog({super.key});
+  const CreateTaskDialog({super.key, this.task});
+
+  final TaskModel? task;
 
   @override
   ConsumerState createState() => _CreateUserDialogState();
@@ -13,8 +15,10 @@ class CreateTaskDialog extends ConsumerStatefulWidget {
 
 class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _nameController = TextEditingController();
+  late TextEditingController _titleController;
+  late TextEditingController _descController;
+  String type = 'СРОЧНО';
+  List<String> users = [];
   bool _isLoading = false;
 
   Future<void> _onSubmit() async {
@@ -22,12 +26,36 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
 
     try {
       setState(() => _isLoading = true);
-      await ref.read(usersProvider.notifier).create(
-            _emailController.text.trim(),
-            _nameController.text.trim(),
-          );
+      if (widget.task == null) {
+        await ref.read(tasksProvider.notifier).create(
+              TaskModel(
+                id: '0',
+                title: _titleController.text.trim(),
+                description: _descController.text.trim(),
+                status: '0',
+                type: type,
+                users: users,
+                createdAt: DateTime.now().millisecondsSinceEpoch,
+                date: '',
+              ),
+            );
+      } else {
+        await ref.read(tasksProvider.notifier).edit(
+              TaskModel(
+                id: widget.task!.id,
+                title: _titleController.text.trim(),
+                description: _descController.text.trim(),
+                status: widget.task!.status,
+                type: type,
+                users: users,
+                createdAt: widget.task!.createdAt,
+                date: widget.task!.date,
+              ),
+            );
+      }
     } catch (e) {
       if (!mounted) return;
+      print('$e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
@@ -46,10 +74,20 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.task?.title);
+    _descController = TextEditingController(text: widget.task?.description);
+    if (widget.task != null) {
+      type = widget.task!.type;
+    }
+  }
+
+  @override
   void dispose() {
     super.dispose();
-    _emailController.dispose();
-    _nameController.dispose();
+    _titleController.dispose();
+    _descController.dispose();
   }
 
   @override
@@ -64,50 +102,48 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
-                controller: _emailController,
+                controller: _titleController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите e-mail';
-                  if (!value.contains('@')) return 'Введите корректный e-mail';
+                  if (value!.isEmpty) return 'Введите название';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Название'),
               ),
               const SizedBox(height: 15),
               TextFormField(
-                controller: _emailController,
+                controller: _descController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите e-mail';
-                  if (!value.contains('@')) return 'Введите корректный e-mail';
+                  if (value!.isEmpty) return 'Введите описание';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Описание'),
               ),
               const SizedBox(height: 15),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Select an item',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: DropdownButtonFormField(
-                    value: 'Барабанщиков Кирилл Дмитриевич',
-                    onChanged: (newValue) {},
-                    items: ['Барабанщиков Кирилл Дмитриевич', '2', '3', '4'].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15),
+              // TextField(
+              //   decoration: InputDecoration(
+              //     labelText: 'Подчинённый',
+              //     border: const OutlineInputBorder(),
+              //     suffixIcon: DropdownButtonFormField(
+              //       value: null,
+              //       onChanged: (newValue) => users.add(newValue!),
+              //       items: ['Барабанщиков Кирилл Дмитриевич', '2', '3', '4'].map<DropdownMenuItem<String>>((String value) {
+              //         return DropdownMenuItem<String>(
+              //           value: value,
+              //           child: Text(value),
+              //         );
+              //       }).toList(),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 15),
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Тип',
                   border: const OutlineInputBorder(),
                   suffixIcon: DropdownButtonFormField(
-                    value: 'СРОЧНО',
-                    onChanged: (newValue) {},
-                    items: ['СРОЧНО', 'ПОЗЖЕ', 'НЕВАЖНО', '4'].map<DropdownMenuItem<String>>((String value) {
+                    value: type,
+                    onChanged: (newValue) => type = newValue!,
+                    items: ['СРОЧНО', 'ПОЗЖЕ', 'НЕВАЖНО'].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),

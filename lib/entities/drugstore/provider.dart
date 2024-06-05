@@ -12,8 +12,6 @@ class Drugstores extends _$Drugstores {
   Future<List<DrugstoreModel>> build() => get();
 
   Future<void> create(DrugstoreModel drugstore) async {
-    print('123');
-
     await ref.read(firebaseFirestoreProvider).collection('drugstores').add({
       'name': drugstore.name,
       'brand': drugstore.brand,
