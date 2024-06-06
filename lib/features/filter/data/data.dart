@@ -104,4 +104,24 @@ final List<FilterItem> filterData = [
       FilterTile(title: 'Активные', value: 'active'),
     ],
   ),
+  FilterItem(
+    name: Filters.status.name,
+    title: 'Статус задачи',
+    tiles: const [
+      FilterTile(title: 'Любой статус', value: ''),
+      FilterTile(title: 'Новые', value: 'Новая'),
+      FilterTile(title: 'В процессе', value: 'В процессе'),
+      FilterTile(title: 'Сделанные', value: 'Сделано'),
+    ],
+  ),
+  FilterItem(
+    name: Filters.type.name,
+    title: 'Тип задачи',
+    tiles: const [
+      FilterTile(title: 'Любой тип', value: ''),
+      FilterTile(title: 'Срочно', value: 'СРОЧНО'),
+      FilterTile(title: 'Позже', value: 'ПОЗЖЕ'),
+      FilterTile(title: 'Не важно', value: 'НЕ ВАЖНО'),
+    ],
+  ),
 ];

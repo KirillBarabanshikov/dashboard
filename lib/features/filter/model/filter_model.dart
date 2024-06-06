@@ -8,6 +8,8 @@ enum Filters {
   plan,
   indicator,
   block,
+  type,
+  status,
 }
 
 class FilterItem {

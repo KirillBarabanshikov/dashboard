@@ -143,7 +143,7 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
                   suffixIcon: DropdownButtonFormField(
                     value: type,
                     onChanged: (newValue) => type = newValue!,
-                    items: ['СРОЧНО', 'ПОЗЖЕ', 'НЕВАЖНО'].map<DropdownMenuItem<String>>((String value) {
+                    items: ['СРОЧНО', 'ПОЗЖЕ', 'НЕ ВАЖНО'].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),

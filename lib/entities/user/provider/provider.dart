@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:random_string/random_string.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../shared/extensions/extensions.dart';
 import '../../../shared/providers/providers.dart';
 import '../model/model.dart';
 
@@ -62,9 +61,9 @@ class Users extends _$Users {
   }
 
   Future<List<UserModel>> get() async {
-    ref.cacheFor(const Duration(minutes: 5));
     QuerySnapshot querySnapshot = await ref.read(firebaseFirestoreProvider).collection('users').orderBy('createdAt', descending: true).get();
     List<UserModel> users = querySnapshot.docs.map((doc) {
+      print(doc.data());
       return UserModel.fromJson(doc.data() as Map<String, Object?>);
     }).toList();
     return users;

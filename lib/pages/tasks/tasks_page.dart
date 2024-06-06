@@ -6,11 +6,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class TasksPage extends ConsumerWidget {
+import '../../entities/task/model.dart';
+import '../../features/filter/model/filter_model.dart';
+import '../../features/filter/ui/list/filter_list.dart';
+
+class TasksPage extends ConsumerStatefulWidget {
   const TasksPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState createState() => _TasksPageState();
+}
+
+class _TasksPageState extends ConsumerState<TasksPage> {
+  List<TaskModel> _filteredTasks = [];
+  Map<String, String> selectedFilter = {};
+
+  void _filterTasks(Map<String, String> filter) {
+    final allTasks = ref.read(tasksProvider).value;
+    selectedFilter = filter;
+    if (filter.isNotEmpty) {
+      _filteredTasks = allTasks!.where((task) {
+        if ((filter['status'] != null && filter['status']!.isNotEmpty) && (filter['type'] != null && filter['type']!.isNotEmpty)) {
+          return (task.status == filter['status'] && task.type == filter['type']);
+        }
+        if ((filter['status'] != null && filter['status']!.isNotEmpty)) {
+          return (task.status == filter['status']);
+        }
+        if ((filter['type'] != null && filter['type']!.isNotEmpty)) {
+          return task.type == filter['type'];
+        }
+        return true;
+      }).toList();
+    } else {
+      _filteredTasks = allTasks!;
+    }
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final asyncTasks = ref.watch(tasksProvider);
 
     Future<void> changeStatus(String id, String status, BuildContext context) async {
@@ -21,12 +55,21 @@ class TasksPage extends ConsumerWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
+          SliverToBoxAdapter(
+            child: FilterList(
+              items: const [Filters.status, Filters.type],
+              onChange: (filters) => _filterTasks(filters),
+            ),
+          ),
           SliverPadding(
-              padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20, top: 30),
+              padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
               sliver: asyncTasks.when(
                 data: (data) {
+                  _filteredTasks = data;
+                  _filterTasks(selectedFilter);
+
                   return SliverGrid.builder(
-                    itemCount: data.length,
+                    itemCount: _filteredTasks.length,
                     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 500,
                       mainAxisSpacing: 20,
@@ -34,7 +77,7 @@ class TasksPage extends ConsumerWidget {
                       mainAxisExtent: 310,
                     ),
                     itemBuilder: (context, index) {
-                      final task = data[index];
+                      final task = _filteredTasks[index];
 
                       return MouseRegion(
                         cursor: SystemMouseCursors.click,

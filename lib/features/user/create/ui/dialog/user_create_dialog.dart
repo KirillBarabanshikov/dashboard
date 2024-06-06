@@ -15,6 +15,7 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _nameController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _isLoading = false;
 
   Future<void> _onSubmit() async {
@@ -64,6 +65,15 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
+                controller: _nameController,
+                validator: (value) {
+                  if (value!.isEmpty) return 'Введите ФИО';
+                  return null;
+                },
+                decoration: const InputDecoration(labelText: 'ФИО'),
+              ),
+              const SizedBox(height: 15),
+              TextFormField(
                 controller: _emailController,
                 validator: (value) {
                   if (value!.isEmpty) return 'Введите e-mail';
@@ -74,11 +84,13 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
               ),
               const SizedBox(height: 15),
               TextFormField(
-                controller: _nameController,
+                controller: _passwordController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите ФИО';
+                  if (value!.isEmpty) return 'Введите пароль';
+                  if (value.length < 6) return 'Пароль должен быть минимум 6 символов';
+                  return null;
                 },
-                decoration: const InputDecoration(labelText: 'ФИО'),
+                decoration: const InputDecoration(labelText: 'Пароль'),
               ),
             ],
           ),
