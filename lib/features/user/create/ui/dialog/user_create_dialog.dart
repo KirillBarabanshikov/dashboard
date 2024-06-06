@@ -16,6 +16,7 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
   final _emailController = TextEditingController();
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
+  String _role = 'Пользователь';
   bool _isLoading = false;
 
   Future<void> _onSubmit() async {
@@ -26,6 +27,8 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
       await ref.read(usersProvider.notifier).create(
             _emailController.text.trim(),
             _nameController.text.trim(),
+            _role,
+            _passwordController.text.trim(),
           );
     } catch (e) {
       if (!mounted) return;
@@ -91,6 +94,23 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Пароль'),
+              ),
+              const SizedBox(height: 15),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Роль',
+                  border: const OutlineInputBorder(),
+                  suffixIcon: DropdownButtonFormField(
+                    value: _role,
+                    onChanged: (newValue) => _role = newValue!,
+                    items: ['Пользователь', 'Администратор'].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ),
             ],
           ),

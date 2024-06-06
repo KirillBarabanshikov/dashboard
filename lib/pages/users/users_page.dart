@@ -69,7 +69,7 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                     mainAxisExtent: 310,
                   ),
                   itemBuilder: (context, index) {
-                    final user = data[index];
+                    final user = _filteredDrugstores[index];
                     return UserCard(
                       user: user,
                       key: ValueKey(user.uid),
