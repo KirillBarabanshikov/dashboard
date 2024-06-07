@@ -59,6 +59,12 @@ GoRouter router(RouterRef ref) {
           return const ProfilePage();
         },
       ),
+      GoRoute(
+        path: '/profile-edit',
+        builder: (context, state) {
+          return const ProfileEditPage();
+        },
+      ),
       ShellRoute(
         builder: (context, state, child) {
           return BaseLayout(

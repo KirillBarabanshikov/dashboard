@@ -25,6 +25,10 @@ mixin _$UserModel {
   String get role => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
+  String? get dateBirth => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
+  String? get position => throw _privateConstructorUsedError;
   int get createdAt => throw _privateConstructorUsedError;
   bool get isBlocked => throw _privateConstructorUsedError;
 
@@ -45,6 +49,10 @@ abstract class $UserModelCopyWith<$Res> {
       String role,
       String displayName,
       String? photoUrl,
+      String? dateBirth,
+      String? phone,
+      String? gender,
+      String? position,
       int createdAt,
       bool isBlocked});
 }
@@ -67,6 +75,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? role = null,
     Object? displayName = null,
     Object? photoUrl = freezed,
+    Object? dateBirth = freezed,
+    Object? phone = freezed,
+    Object? gender = freezed,
+    Object? position = freezed,
     Object? createdAt = null,
     Object? isBlocked = null,
   }) {
@@ -90,6 +102,22 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       photoUrl: freezed == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dateBirth: freezed == dateBirth
+          ? _value.dateBirth
+          : dateBirth // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -117,6 +145,10 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String role,
       String displayName,
       String? photoUrl,
+      String? dateBirth,
+      String? phone,
+      String? gender,
+      String? position,
       int createdAt,
       bool isBlocked});
 }
@@ -137,6 +169,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? role = null,
     Object? displayName = null,
     Object? photoUrl = freezed,
+    Object? dateBirth = freezed,
+    Object? phone = freezed,
+    Object? gender = freezed,
+    Object? position = freezed,
     Object? createdAt = null,
     Object? isBlocked = null,
   }) {
@@ -161,6 +197,22 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      dateBirth: freezed == dateBirth
+          ? _value.dateBirth
+          : dateBirth // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -182,6 +234,10 @@ class _$UserModelImpl implements _UserModel {
       required this.role,
       required this.displayName,
       required this.photoUrl,
+      required this.dateBirth,
+      required this.phone,
+      required this.gender,
+      required this.position,
       required this.createdAt,
       required this.isBlocked});
 
@@ -199,13 +255,21 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? photoUrl;
   @override
+  final String? dateBirth;
+  @override
+  final String? phone;
+  @override
+  final String? gender;
+  @override
+  final String? position;
+  @override
   final int createdAt;
   @override
   final bool isBlocked;
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, email: $email, role: $role, displayName: $displayName, photoUrl: $photoUrl, createdAt: $createdAt, isBlocked: $isBlocked)';
+    return 'UserModel(uid: $uid, email: $email, role: $role, displayName: $displayName, photoUrl: $photoUrl, dateBirth: $dateBirth, phone: $phone, gender: $gender, position: $position, createdAt: $createdAt, isBlocked: $isBlocked)';
   }
 
   @override
@@ -220,6 +284,12 @@ class _$UserModelImpl implements _UserModel {
                 other.displayName == displayName) &&
             (identical(other.photoUrl, photoUrl) ||
                 other.photoUrl == photoUrl) &&
+            (identical(other.dateBirth, dateBirth) ||
+                other.dateBirth == dateBirth) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.isBlocked, isBlocked) ||
@@ -229,7 +299,7 @@ class _$UserModelImpl implements _UserModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, uid, email, role, displayName,
-      photoUrl, createdAt, isBlocked);
+      photoUrl, dateBirth, phone, gender, position, createdAt, isBlocked);
 
   @JsonKey(ignore: true)
   @override
@@ -252,6 +322,10 @@ abstract class _UserModel implements UserModel {
       required final String role,
       required final String displayName,
       required final String? photoUrl,
+      required final String? dateBirth,
+      required final String? phone,
+      required final String? gender,
+      required final String? position,
       required final int createdAt,
       required final bool isBlocked}) = _$UserModelImpl;
 
@@ -268,6 +342,14 @@ abstract class _UserModel implements UserModel {
   String get displayName;
   @override
   String? get photoUrl;
+  @override
+  String? get dateBirth;
+  @override
+  String? get phone;
+  @override
+  String? get gender;
+  @override
+  String? get position;
   @override
   int get createdAt;
   @override

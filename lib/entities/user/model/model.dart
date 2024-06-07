@@ -11,6 +11,10 @@ class UserModel with _$UserModel {
     required String role,
     required String displayName,
     required String? photoUrl,
+    required String? dateBirth,
+    required String? phone,
+    required String? gender,
+    required String? position,
     required int createdAt,
     required bool isBlocked,
   }) = _UserModel;

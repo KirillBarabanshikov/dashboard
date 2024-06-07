@@ -1,3 +1,4 @@
+import 'package:dashboard/shared/services/hive_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,11 +6,27 @@ import 'package:go_router/go_router.dart';
 import '../../entities/session/session.dart';
 import '../../shared/constants/constants.dart';
 
-class ProfilePage extends ConsumerWidget {
+class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends ConsumerState<ProfilePage> {
+  SessionUser? sessionUser;
+
+  @override
+  void initState() {
+    sessionUser = HiveService.getSessionUser();
+
+    print(sessionUser?.photoUrl);
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -20,7 +37,10 @@ class ProfilePage extends ConsumerWidget {
         title: const Text('Профиль'),
         actions: [
           IconButton(
-            onPressed: () => ref.read(sessionProvider).signOut(),
+            onPressed: () async {
+              await ref.read(sessionProvider).signOut();
+              if (context.mounted) context.go('/');
+            },
             tooltip: 'Выход',
             color: Colors.red,
             icon: const Icon(Icons.logout),
@@ -36,10 +56,15 @@ class ProfilePage extends ConsumerWidget {
             SizedBox(
               width: 200,
               height: 200,
-              child: Image.asset(
-                'images/profile.jpg',
-                fit: BoxFit.cover,
-              ),
+              child: sessionUser?.photoUrl == null
+                  ? Image.asset(
+                      'images/profile.png',
+                      fit: BoxFit.cover,
+                    )
+                  : Image.network(
+                      sessionUser!.photoUrl!,
+                      fit: BoxFit.cover,
+                    ),
             ),
             const SizedBox(width: 50),
             Expanded(
@@ -49,16 +74,16 @@ class ProfilePage extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      const Text(
-                        'Барабанщиков Кирилл Дмириевич',
-                        style: TextStyle(
+                      Text(
+                        sessionUser?.displayName ?? '',
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const Expanded(child: SizedBox()),
                       FilledButton(
-                        onPressed: () {},
+                        onPressed: () => context.go('/profile-edit'),
                         child: const Row(
                           children: [
                             Icon(Icons.edit),
@@ -71,13 +96,19 @@ class ProfilePage extends ConsumerWidget {
                   ),
                   const SizedBox(height: 25),
                   Text('Дата рождения:', style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
-                  const Text('24.02.2004', style: TextStyle(fontSize: 16)),
+                  Text(sessionUser?.dateBirth ?? 'Не указано', style: const TextStyle(fontSize: 16)),
                   const SizedBox(height: 20),
                   Text('E-mail:', style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
-                  const Text('lilkirill2020@gmail.com', style: TextStyle(fontSize: 16)),
+                  Text(sessionUser?.email ?? 'Не указано', style: const TextStyle(fontSize: 16)),
                   const SizedBox(height: 20),
                   Text('Телефон', style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
-                  const Text('89828167454', style: TextStyle(fontSize: 16)),
+                  Text(sessionUser?.phone ?? 'Не указано', style: const TextStyle(fontSize: 16)),
+                  const SizedBox(height: 20),
+                  Text('Место проживания', style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
+                  Text(sessionUser?.position ?? 'Не указано', style: const TextStyle(fontSize: 16)),
+                  const SizedBox(height: 20),
+                  Text('Пол', style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
+                  Text(sessionUser?.gender ?? 'Не указано', style: const TextStyle(fontSize: 16)),
                 ],
               ),
             ),

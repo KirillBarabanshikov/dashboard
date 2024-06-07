@@ -13,6 +13,10 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       role: json['role'] as String,
       displayName: json['displayName'] as String,
       photoUrl: json['photoUrl'] as String?,
+      dateBirth: json['dateBirth'] as String?,
+      phone: json['phone'] as String?,
+      gender: json['gender'] as String?,
+      position: json['position'] as String?,
       createdAt: (json['createdAt'] as num).toInt(),
       isBlocked: json['isBlocked'] as bool,
     );
@@ -24,6 +28,10 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'role': instance.role,
       'displayName': instance.displayName,
       'photoUrl': instance.photoUrl,
+      'dateBirth': instance.dateBirth,
+      'phone': instance.phone,
+      'gender': instance.gender,
+      'position': instance.position,
       'createdAt': instance.createdAt,
       'isBlocked': instance.isBlocked,
     };

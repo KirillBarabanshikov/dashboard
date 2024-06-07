@@ -31,7 +31,7 @@ class _UserMenuState extends ConsumerState<UserMenu> {
           onPressed: () => controller.isOpen ? controller.close() : controller.open(),
           padding: const EdgeInsets.all(5),
           icon: UserAvatar(
-            displayName: sessionUser == null ? 'Кирилл Ба' : sessionUser!.displayName,
+            displayName: sessionUser == null ? 'TEST' : sessionUser!.displayName,
             photoUrl: sessionUser?.photoUrl,
           ),
         );

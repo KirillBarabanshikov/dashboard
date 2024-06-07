@@ -33,7 +33,7 @@ class UserCard extends ConsumerWidget {
               children: [
                 UserAvatar(
                   displayName: user.displayName,
-                  photoUrl: user.displayName,
+                  photoUrl: user.photoUrl,
                 ),
                 const SizedBox(width: 10),
                 Flexible(
@@ -61,6 +61,14 @@ class UserCard extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             Text('Email: ${user.email}'),
+            const SizedBox(height: 10),
+            Text('Телефон: ${user.phone ?? 'Не указано'}'),
+            const SizedBox(height: 10),
+            Text('Дата рождения: ${user.dateBirth ?? 'Не указано'}'),
+            const SizedBox(height: 10),
+            Text('Место проживания: ${user.position ?? 'Не указано'}'),
+            const SizedBox(height: 10),
+            Text('Пол: ${user.gender ?? 'Не указано'}'),
             const SizedBox(height: 10),
             Text('Роль: ${user.role}'),
           ],

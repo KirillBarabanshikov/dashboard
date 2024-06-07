@@ -22,15 +22,19 @@ class SessionUserAdapter extends TypeAdapter<SessionUser> {
       role: fields[2] as String,
       displayName: fields[3] as String,
       photoUrl: fields[4] as String?,
-      createdAt: fields[5] as int?,
-      isBlocked: fields[6] as bool,
+      dateBirth: fields[5] as String?,
+      phone: fields[6] as String?,
+      gender: fields[7] as String?,
+      position: fields[8] as String?,
+      createdAt: fields[9] as int?,
+      isBlocked: fields[10] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, SessionUser obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.uid)
       ..writeByte(1)
@@ -42,8 +46,16 @@ class SessionUserAdapter extends TypeAdapter<SessionUser> {
       ..writeByte(4)
       ..write(obj.photoUrl)
       ..writeByte(5)
-      ..write(obj.createdAt)
+      ..write(obj.dateBirth)
       ..writeByte(6)
+      ..write(obj.phone)
+      ..writeByte(7)
+      ..write(obj.gender)
+      ..writeByte(8)
+      ..write(obj.position)
+      ..writeByte(9)
+      ..write(obj.createdAt)
+      ..writeByte(10)
       ..write(obj.isBlocked);
   }
 

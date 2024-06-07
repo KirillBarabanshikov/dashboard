@@ -24,6 +24,10 @@ class Users extends _$Users {
       'role': role,
       'displayName': displayName,
       'photoUrl': null,
+      'dateBirth': null,
+      'phone': null,
+      'gender': null,
+      'position': null,
       'createdAt': DateTime.now().millisecondsSinceEpoch,
       'isBlocked': false,
     });

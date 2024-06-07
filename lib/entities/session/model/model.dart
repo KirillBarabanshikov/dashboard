@@ -10,6 +10,10 @@ class SessionUser extends HiveObject {
     required this.role,
     required this.displayName,
     required this.photoUrl,
+    required this.dateBirth,
+    required this.phone,
+    required this.gender,
+    required this.position,
     required this.createdAt,
     required this.isBlocked,
   });
@@ -30,8 +34,20 @@ class SessionUser extends HiveObject {
   String? photoUrl;
 
   @HiveField(5)
-  int? createdAt;
+  String? dateBirth;
 
   @HiveField(6)
+  String? phone;
+
+  @HiveField(7)
+  String? gender;
+
+  @HiveField(8)
+  String? position;
+
+  @HiveField(9)
+  int? createdAt;
+
+  @HiveField(10)
   bool isBlocked;
 }
