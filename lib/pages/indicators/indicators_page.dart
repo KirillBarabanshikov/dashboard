@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../features/filter/model/filter_model.dart';
+import '../../features/filter/ui/list/filter_list.dart';
 import '../../widgets/widget.dart';
 
 class IndicatorsPage extends StatelessWidget {
@@ -7,17 +9,17 @@ class IndicatorsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // SliverToBoxAdapter(
-          //   child: FilterList(
-          //     items: const [Filters.date, Filters.lfl, Filters.city, Filters.store, Filters.level, Filters.subordinate],
-          //     onChange: (filters) => print(filters),
-          //   ),
-          // ),
-          SliverPadding(
-            padding: EdgeInsets.only(bottom: 30, left: 20, right: 20, top: 30),
+          SliverToBoxAdapter(
+            child: FilterList(
+              items: const [Filters.date],
+              onChange: (filters) => print(filters),
+            ),
+          ),
+          const SliverPadding(
+            padding: EdgeInsets.only(bottom: 30, left: 20, right: 20),
             sliver: IndicatorsGrid(),
           ),
         ],

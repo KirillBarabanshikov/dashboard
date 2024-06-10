@@ -7,14 +7,10 @@ final List<FilterItem> filterData = [
     tiles: const [
       FilterTile(title: 'Сегодня', value: 'Сегодня'),
       FilterTile(title: 'Текущая неделя', value: 'Текущая неделя'),
-      FilterTile(title: 'Текущий месяц по вчера', value: 'Текущий месяц по вчера'),
-      FilterTile(title: 'Текущий месяц по сейчас', value: 'Текущий месяц по сейчас'),
       FilterTile(title: 'Текущий месяц', value: 'Текущий месяц'),
       FilterTile(title: 'Вчера', value: 'Вчера'),
       FilterTile(title: 'Прошлый месяц', value: 'Прошлый месяц'),
       FilterTile(title: 'Прошлая неделя', value: 'Прошлая неделя'),
-      FilterTile(title: 'Актуальный период', value: 'Актуальный период'),
-      FilterTile(title: 'Задать от и до', value: 'Задать от и до'),
     ],
   ),
   FilterItem(

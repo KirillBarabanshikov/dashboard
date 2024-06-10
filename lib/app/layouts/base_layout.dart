@@ -133,8 +133,8 @@ class BaseLayout extends ConsumerWidget {
           ],
         ),
         actions: [
-          IconButton(onPressed: () => onRefreshData(ref), icon: const Icon(Icons.sync)),
-          const SizedBox(width: 10),
+          // IconButton(onPressed: () => onRefreshData(ref), icon: const Icon(Icons.sync)),
+          // const SizedBox(width: 10),
           ..._buildActions(context),
           const SizedBox(width: 20),
         ],
@@ -165,7 +165,13 @@ class BaseLayout extends ConsumerWidget {
   Widget _buildMobileLayout(BuildContext context, WidgetRef ref, int currentIndex) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_navigationItems[currentIndex].label),
+        title: Row(
+          children: [
+            const UserMenu(),
+            const SizedBox(width: 15),
+            Text(_navigationItems[currentIndex].label),
+          ],
+        ),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
         ],

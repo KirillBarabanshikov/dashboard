@@ -8,7 +8,6 @@ final theme = ThemeData(
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.orangeAccent,
     primary: Colors.orangeAccent,
-    background: AppColors.background,
     surfaceTint: Colors.transparent,
   ),
   scaffoldBackgroundColor: AppColors.background,
@@ -42,9 +41,15 @@ final theme = ThemeData(
     unselectedItemColor: Colors.black,
     type: BottomNavigationBarType.fixed,
   ),
-  dialogTheme: DialogTheme(),
+  cardTheme: const CardTheme(
+    color: Colors.white,
+  ),
+  navigationRailTheme: const NavigationRailThemeData(
+    backgroundColor: Colors.white,
+  ),
+  appBarTheme: const AppBarTheme(
+    color: Colors.white,
+  ),
+  menuButtonTheme: const MenuButtonThemeData(style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.white))),
+  dialogBackgroundColor: Colors.white,
 );
-
-class StyleText {
-  static const px14 = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
-}
