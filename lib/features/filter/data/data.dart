@@ -5,12 +5,12 @@ final List<FilterItem> filterData = [
     name: Filters.date.name,
     title: 'Даты',
     tiles: const [
-      FilterTile(title: 'Сегодня', value: 'Сегодня'),
-      FilterTile(title: 'Текущая неделя', value: 'Текущая неделя'),
-      FilterTile(title: 'Текущий месяц', value: 'Текущий месяц'),
-      FilterTile(title: 'Вчера', value: 'Вчера'),
-      FilterTile(title: 'Прошлый месяц', value: 'Прошлый месяц'),
-      FilterTile(title: 'Прошлая неделя', value: 'Прошлая неделя'),
+      FilterTile(title: 'Сегодня', value: 'today'),
+      FilterTile(title: 'Текущая неделя', value: 'currentWeek'),
+      FilterTile(title: 'Текущий месяц', value: 'currentMonth'),
+      FilterTile(title: 'Вчера', value: 'tomorrow'),
+      FilterTile(title: 'Прошлый месяц', value: 'lastMonth'),
+      FilterTile(title: 'Прошлая неделя', value: 'lastWeek'),
     ],
   ),
   FilterItem(
