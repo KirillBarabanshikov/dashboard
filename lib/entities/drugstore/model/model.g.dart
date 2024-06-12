@@ -15,7 +15,6 @@ _$DrugstoreModelImpl _$$DrugstoreModelImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       name: json['name'] as String,
       region: json['region'] as String,
-      createdAt: (json['createdAt'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$DrugstoreModelImplToJson(
@@ -28,5 +27,4 @@ Map<String, dynamic> _$$DrugstoreModelImplToJson(
       'description': instance.description,
       'name': instance.name,
       'region': instance.region,
-      'createdAt': instance.createdAt,
     };

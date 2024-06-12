@@ -52,7 +52,7 @@ class _IndicatorsPageState extends ConsumerState<IndicatorsPage> {
                 );
               },
               error: (error, stackTrace) => SliverToBoxAdapter(child: Text(error.toString())),
-              loading: () => const SliverFillRemaining(child: Center(child: CircularProgressIndicator())),
+              loading: () => const SliverFillRemaining(hasScrollBody: false, child: Center(child: CircularProgressIndicator())),
             ),
           ),
         ],

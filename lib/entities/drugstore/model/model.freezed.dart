@@ -27,7 +27,6 @@ mixin _$DrugstoreModel {
   String? get description => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get region => throw _privateConstructorUsedError;
-  int get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,8 +47,7 @@ abstract class $DrugstoreModelCopyWith<$Res> {
       String city,
       String? description,
       String name,
-      String region,
-      int createdAt});
+      String region});
 }
 
 /// @nodoc
@@ -72,7 +70,6 @@ class _$DrugstoreModelCopyWithImpl<$Res, $Val extends DrugstoreModel>
     Object? description = freezed,
     Object? name = null,
     Object? region = null,
-    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -103,10 +100,6 @@ class _$DrugstoreModelCopyWithImpl<$Res, $Val extends DrugstoreModel>
           ? _value.region
           : region // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
   }
 }
@@ -126,8 +119,7 @@ abstract class _$$DrugstoreModelImplCopyWith<$Res>
       String city,
       String? description,
       String name,
-      String region,
-      int createdAt});
+      String region});
 }
 
 /// @nodoc
@@ -148,7 +140,6 @@ class __$$DrugstoreModelImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? name = null,
     Object? region = null,
-    Object? createdAt = null,
   }) {
     return _then(_$DrugstoreModelImpl(
       id: null == id
@@ -179,10 +170,6 @@ class __$$DrugstoreModelImplCopyWithImpl<$Res>
           ? _value.region
           : region // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -197,8 +184,7 @@ class _$DrugstoreModelImpl implements _DrugstoreModel {
       required this.city,
       required this.description,
       required this.name,
-      required this.region,
-      required this.createdAt});
+      required this.region});
 
   factory _$DrugstoreModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$DrugstoreModelImplFromJson(json);
@@ -217,12 +203,10 @@ class _$DrugstoreModelImpl implements _DrugstoreModel {
   final String name;
   @override
   final String region;
-  @override
-  final int createdAt;
 
   @override
   String toString() {
-    return 'DrugstoreModel(id: $id, address: $address, brand: $brand, city: $city, description: $description, name: $name, region: $region, createdAt: $createdAt)';
+    return 'DrugstoreModel(id: $id, address: $address, brand: $brand, city: $city, description: $description, name: $name, region: $region)';
   }
 
   @override
@@ -237,15 +221,13 @@ class _$DrugstoreModelImpl implements _DrugstoreModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.region, region) || other.region == region) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.region, region) || other.region == region));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, address, brand, city,
-      description, name, region, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, address, brand, city, description, name, region);
 
   @JsonKey(ignore: true)
   @override
@@ -270,8 +252,7 @@ abstract class _DrugstoreModel implements DrugstoreModel {
       required final String city,
       required final String? description,
       required final String name,
-      required final String region,
-      required final int createdAt}) = _$DrugstoreModelImpl;
+      required final String region}) = _$DrugstoreModelImpl;
 
   factory _DrugstoreModel.fromJson(Map<String, dynamic> json) =
       _$DrugstoreModelImpl.fromJson;
@@ -290,8 +271,6 @@ abstract class _DrugstoreModel implements DrugstoreModel {
   String get name;
   @override
   String get region;
-  @override
-  int get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$DrugstoreModelImplCopyWith<_$DrugstoreModelImpl> get copyWith =>

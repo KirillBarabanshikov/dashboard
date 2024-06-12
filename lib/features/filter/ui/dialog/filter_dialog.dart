@@ -34,6 +34,7 @@ class _FilterDialogState extends State<FilterDialog> {
     final tiles = widget.filterItem.tiles.where((tile) => tile.title.toLowerCase().contains(searchValue.toLowerCase())).toList();
 
     return Dialog(
+      insetPadding: const EdgeInsets.all(20),
       child: Container(
         constraints: const BoxConstraints(maxWidth: 800),
         child: Column(

@@ -52,4 +52,10 @@ final theme = ThemeData(
   ),
   menuButtonTheme: const MenuButtonThemeData(style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.white))),
   dialogBackgroundColor: Colors.white,
+  dropdownMenuTheme: const DropdownMenuThemeData(
+    menuStyle: MenuStyle(
+      backgroundColor: WidgetStatePropertyAll(Colors.white),
+      surfaceTintColor: WidgetStatePropertyAll(Colors.white),
+    ),
+  ),
 );

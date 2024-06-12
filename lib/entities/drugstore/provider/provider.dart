@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dashboard/shared/extensions/extensions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../shared/providers/firebase_providers.dart';
-import './model.dart';
+import '../../../shared/providers/firebase_providers.dart';
+import '../model/model.dart';
 
 part 'provider.g.dart';
 
@@ -19,12 +20,13 @@ class Drugstores extends _$Drugstores {
       'city': drugstore.city,
       'address': drugstore.address,
       'description': drugstore.description,
-      'createdAt': drugstore.createdAt,
+      'createdAt': DateTime.now(),
     });
     ref.invalidateSelf();
   }
 
   Future<List<DrugstoreModel>> get() async {
+    ref.cacheFor(const Duration(minutes: 1));
     QuerySnapshot querySnapshot = await ref.read(firebaseFirestoreProvider).collection('drugstores').orderBy('createdAt', descending: true).get();
     List<DrugstoreModel> drugstores = querySnapshot.docs.map((doc) {
       return DrugstoreModel.fromJson({'id': doc.id, ...doc.data() as Map<String, Object?>});

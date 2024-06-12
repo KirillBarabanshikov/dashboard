@@ -82,7 +82,7 @@ GoRouter router(RouterRef ref) {
           GoRoute(
             path: Routes.storeRating.path,
             builder: (context, state) {
-              return const StoreRatingPage();
+              return const DrugstoresPage();
             },
           ),
           GoRoute(

@@ -13,7 +13,6 @@ class DrugstoreModel with _$DrugstoreModel {
     required String? description,
     required String name,
     required String region,
-    required int createdAt,
   }) = _DrugstoreModel;
 
   factory DrugstoreModel.fromJson(Map<String, Object?> json) => _$DrugstoreModelFromJson(json);

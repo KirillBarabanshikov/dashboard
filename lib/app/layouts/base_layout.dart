@@ -1,11 +1,10 @@
-import 'package:dashboard/entities/user/provider/provider.dart';
-import 'package:dashboard/features/drugstore/create/create.dart';
 import 'package:dashboard/features/task/create/create.dart';
 import 'package:dashboard/features/user/create/create.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/drugstore/drugstore.dart';
 import '../../shared/constants/constants.dart';
 import '../../widgets/widget.dart';
 
@@ -53,10 +52,7 @@ class BaseLayout extends ConsumerWidget {
   final String currentPath;
 
   Future<void> onRefreshData(WidgetRef ref) async {
-    switch (currentPath) {
-      case '/users':
-        ref.read(usersProvider.notifier).ref.invalidateSelf();
-    }
+    await Future.delayed(const Duration(milliseconds: 300));
   }
 
   List<Widget> _buildActions(BuildContext context) {
@@ -133,8 +129,6 @@ class BaseLayout extends ConsumerWidget {
           ],
         ),
         actions: [
-          // IconButton(onPressed: () => onRefreshData(ref), icon: const Icon(Icons.sync)),
-          // const SizedBox(width: 10),
           ..._buildActions(context),
           const SizedBox(width: 20),
         ],
@@ -173,7 +167,8 @@ class BaseLayout extends ConsumerWidget {
           ],
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+          ..._buildActions(context),
+          const SizedBox(width: 15),
         ],
       ),
       body: RefreshIndicator(
@@ -188,6 +183,7 @@ class BaseLayout extends ConsumerWidget {
         items: _navigationItems.map((item) {
           return BottomNavigationBarItem(icon: item.icon, label: item.label);
         }).toList(),
+        backgroundColor: Colors.white,
       ),
     );
   }

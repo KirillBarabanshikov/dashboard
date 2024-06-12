@@ -1,11 +1,14 @@
-import 'package:dashboard/entities/drugstore/model.dart';
-import 'package:dashboard/entities/drugstore/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../entities/drugstore/drugstore.dart';
+
 class CreateDrugstoreDialog extends ConsumerStatefulWidget {
-  const CreateDrugstoreDialog({super.key, this.drugstore});
+  const CreateDrugstoreDialog({
+    super.key,
+    this.drugstore,
+  });
 
   final DrugstoreModel? drugstore;
 
@@ -16,11 +19,11 @@ class CreateDrugstoreDialog extends ConsumerStatefulWidget {
 class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
-  late TextEditingController _brandController;
   late TextEditingController _regionController;
   late TextEditingController _cityController;
   late TextEditingController _addressController;
   late TextEditingController _descController;
+  String? _brand;
   bool _isLoading = false;
 
   Future<void> _onSubmit() async {
@@ -33,23 +36,24 @@ class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
         await ref.read(drugstoresProvider.notifier).create(DrugstoreModel(
               id: '0',
               address: _addressController.text.trim(),
-              brand: _brandController.text.trim(),
+              brand: _brand!,
               city: _cityController.text.trim(),
               description: _descController.text.trim(),
               name: _nameController.text.trim(),
               region: _regionController.text.trim(),
-              createdAt: DateTime.now().millisecondsSinceEpoch,
             ));
       } else {
-        await ref.read(drugstoresProvider.notifier).edit(DrugstoreModel(
-            id: widget.drugstore!.id,
-            address: _addressController.text.trim(),
-            brand: _brandController.text.trim(),
-            city: _cityController.text.trim(),
-            description: _descController.text.trim(),
-            name: _nameController.text.trim(),
-            region: _regionController.text.trim(),
-            createdAt: widget.drugstore!.createdAt));
+        await ref.read(drugstoresProvider.notifier).edit(
+              DrugstoreModel(
+                id: widget.drugstore!.id,
+                address: _addressController.text.trim(),
+                brand: _brand!,
+                city: _cityController.text.trim(),
+                description: _descController.text.trim(),
+                name: _nameController.text.trim(),
+                region: _regionController.text.trim(),
+              ),
+            );
       }
     } catch (e) {
       if (!mounted) return;
@@ -74,18 +78,17 @@ class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.drugstore?.name);
-    _brandController = TextEditingController(text: widget.drugstore?.brand);
     _regionController = TextEditingController(text: widget.drugstore?.region);
     _cityController = TextEditingController(text: widget.drugstore?.city);
     _addressController = TextEditingController(text: widget.drugstore?.address);
     _descController = TextEditingController(text: widget.drugstore?.description);
+    _brand = widget.drugstore?.brand;
   }
 
   @override
   void dispose() {
     super.dispose();
     _nameController.dispose();
-    _brandController.dispose();
     _regionController.dispose();
     _cityController.dispose();
     _addressController.dispose();
@@ -94,9 +97,13 @@ class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      insetPadding: const EdgeInsets.all(20),
       title: Text(widget.drugstore == null ? 'Добавить аптеку' : 'Изменить аптеку'),
       content: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 500, maxWidth: 500),
+        constraints: const BoxConstraints(
+          maxWidth: 500,
+          minWidth: 500,
+        ),
         child: Form(
           key: _formKey,
           child: Column(
@@ -105,25 +112,37 @@ class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
               TextFormField(
                 controller: _nameController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите название';
+                  if (value!.trim().isEmpty) return 'Введите название';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Название'),
               ),
               const SizedBox(height: 15),
-              TextFormField(
-                controller: _brandController,
+              DropdownButtonFormField(
+                onChanged: (value) => _brand = value,
+                value: _brand,
+                items: const [
+                  DropdownMenuItem(value: 'Аптека «Фармаимпекс»', child: Text('Аптека «Фармаимпекс»')),
+                  DropdownMenuItem(value: 'Аптека от склада', child: Text('Аптека от склада')),
+                  DropdownMenuItem(value: 'Аптека по пути', child: Text('Аптека по пути')),
+                  DropdownMenuItem(value: 'Аптека Экона', child: Text('Аптека Экона')),
+                  DropdownMenuItem(value: 'Бережная аптека', child: Text('Бережная аптека')),
+                  DropdownMenuItem(value: 'Клюква', child: Text('Клюква')),
+                  DropdownMenuItem(value: 'Социалочка', child: Text('Социалочка')),
+                  DropdownMenuItem(value: 'Фармакон', child: Text('Фармакон')),
+                ],
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите бренд';
+                  if (value == null) return 'Выберите бренд';
                   return null;
                 },
+                dropdownColor: Colors.white,
                 decoration: const InputDecoration(labelText: 'Бренд'),
               ),
               const SizedBox(height: 15),
               TextFormField(
                 controller: _regionController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите регион';
+                  if (value!.trim().isEmpty) return 'Введите регион';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Регион'),
@@ -132,7 +151,7 @@ class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
               TextFormField(
                 controller: _cityController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите город';
+                  if (value!.trim().isEmpty) return 'Введите город';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Город'),
@@ -141,7 +160,7 @@ class _CreateUserDialogState extends ConsumerState<CreateDrugstoreDialog> {
               TextFormField(
                 controller: _addressController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите адрес';
+                  if (value!.trim().isEmpty) return 'Введите адрес';
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'Адрес'),
