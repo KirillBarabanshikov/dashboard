@@ -32,6 +32,7 @@ class _DrugstoresPageState extends ConsumerState<DrugstoresPage> {
       _filteredDrugstores = allDrugstores!.where((drugstore) {
         return drugstore.name.toLowerCase().contains(query.toLowerCase());
       }).toList();
+      _filteredDrugstores = _filteredDrugstores.sublist(0, _filteredDrugstores.length >= _limit ? _limit : null);
     } else {
       _filteredDrugstores = allDrugstores!;
     }

@@ -44,6 +44,7 @@ class _TasksPageState extends ConsumerState<TasksPage> {
         }
         return true;
       }).toList();
+      _filteredTasks = _filteredTasks.sublist(0, _filteredTasks.length >= _limit ? _limit : null);
     } else {
       _filteredTasks = allTasks!;
     }
@@ -68,7 +69,8 @@ class _TasksPageState extends ConsumerState<TasksPage> {
               sliver: asyncTasks.when(
                 data: (data) {
                   _filteredTasks = data;
-                  if (selectedFilter.isNotEmpty) {
+                  if ((selectedFilter['status'] != null && selectedFilter['status'] != '') ||
+                      (selectedFilter['type'] != null && selectedFilter['type'] != '')) {
                     _filterTasks(selectedFilter);
                   } else {
                     final start = _limit * _currentPage - _limit;
