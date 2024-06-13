@@ -9,9 +9,11 @@ class DrugstoreCard extends ConsumerWidget {
   const DrugstoreCard({
     super.key,
     required this.drugstore,
+    required this.isAdmin,
   });
 
   final DrugstoreModel drugstore;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -90,35 +92,36 @@ class DrugstoreCard extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    MenuAnchor(
-                      builder: (context, controller, child) {
-                        return IconButton(
-                          onPressed: () => controller.isOpen ? controller.close() : controller.open(),
-                          icon: const Icon(Icons.more_vert),
-                        );
-                      },
-                      menuChildren: [
-                        MenuItemButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CreateDrugstoreDialog(drugstore: drugstore);
-                              },
-                            );
-                          },
-                          leadingIcon: const Icon(Icons.edit),
-                          child: const Text('Изменить'),
-                        ),
-                        MenuItemButton(
-                          onPressed: () {
-                            ref.read(drugstoresProvider.notifier).delete(drugstore.id);
-                          },
-                          leadingIcon: const Icon(Icons.delete),
-                          child: const Text('Удалить'),
-                        ),
-                      ],
-                    ),
+                    if (isAdmin)
+                      MenuAnchor(
+                        builder: (context, controller, child) {
+                          return IconButton(
+                            onPressed: () => controller.isOpen ? controller.close() : controller.open(),
+                            icon: const Icon(Icons.more_vert),
+                          );
+                        },
+                        menuChildren: [
+                          MenuItemButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CreateDrugstoreDialog(drugstore: drugstore);
+                                },
+                              );
+                            },
+                            leadingIcon: const Icon(Icons.edit),
+                            child: const Text('Изменить'),
+                          ),
+                          MenuItemButton(
+                            onPressed: () {
+                              ref.read(drugstoresProvider.notifier).delete(drugstore.id);
+                            },
+                            leadingIcon: const Icon(Icons.delete),
+                            child: const Text('Удалить'),
+                          ),
+                        ],
+                      ),
                   ],
                 ),
                 const SizedBox(height: 20),

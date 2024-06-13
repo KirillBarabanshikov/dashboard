@@ -3,6 +3,9 @@ import 'package:dashboard/shared/ui/pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../entities/session/model/model.dart';
+import '../../shared/services/hive_service.dart';
+
 class DrugstoresPage extends ConsumerStatefulWidget {
   const DrugstoresPage({super.key});
 
@@ -14,7 +17,14 @@ class _DrugstoresPageState extends ConsumerState<DrugstoresPage> {
   final TextEditingController _searchController = TextEditingController();
   List<DrugstoreModel> _filteredDrugstores = [];
   int _currentPage = 1;
-  final _limit = 12;
+  final _limit = 8;
+  late SessionUser sessionUser;
+
+  @override
+  void initState() {
+    super.initState();
+    sessionUser = HiveService.getSessionUser();
+  }
 
   void _filterDrugstores(String query) {
     final allDrugstores = ref.read(drugstoresProvider).value;
@@ -69,7 +79,10 @@ class _DrugstoresPageState extends ConsumerState<DrugstoresPage> {
                   itemBuilder: (context, index) {
                     final drugstore = _filteredDrugstores[index];
 
-                    return DrugstoreCard(drugstore: drugstore);
+                    return DrugstoreCard(
+                      drugstore: drugstore,
+                      isAdmin: sessionUser.role == 'Администратор',
+                    );
                   },
                 );
               },

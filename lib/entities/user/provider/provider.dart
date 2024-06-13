@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dashboard/shared/extensions/extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -36,6 +37,7 @@ class Users extends _$Users {
   }
 
   Future<List<UserModel>> get() async {
+    ref.cacheFor(const Duration(minutes: 1));
     QuerySnapshot querySnapshot = await ref.read(firebaseFirestoreProvider).collection('users').orderBy('createdAt', descending: true).get();
     List<UserModel> users = querySnapshot.docs.map((doc) {
       return UserModel.fromJson(doc.data() as Map<String, Object?>);

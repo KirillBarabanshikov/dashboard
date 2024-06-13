@@ -11,10 +11,20 @@ class TaskModel with _$TaskModel {
     required String description,
     required String status,
     required String type,
-    required List<String> users,
+    required TaskUserModel user,
     required int createdAt,
     required String date,
   }) = _TaskModel;
 
   factory TaskModel.fromJson(Map<String, Object?> json) => _$TaskModelFromJson(json);
+}
+
+@freezed
+class TaskUserModel with _$TaskUserModel {
+  const factory TaskUserModel({
+    required String displayName,
+    required String? photoUrl,
+  }) = _TaskUserModel;
+
+  factory TaskUserModel.fromJson(Map<String, Object?> json) => _$TaskUserModelFromJson(json);
 }

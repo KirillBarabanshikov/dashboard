@@ -25,7 +25,7 @@ mixin _$TaskModel {
   String get description => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
-  List<String> get users => throw _privateConstructorUsedError;
+  TaskUserModel get user => throw _privateConstructorUsedError;
   int get createdAt => throw _privateConstructorUsedError;
   String get date => throw _privateConstructorUsedError;
 
@@ -46,9 +46,11 @@ abstract class $TaskModelCopyWith<$Res> {
       String description,
       String status,
       String type,
-      List<String> users,
+      TaskUserModel user,
       int createdAt,
       String date});
+
+  $TaskUserModelCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -69,7 +71,7 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
     Object? description = null,
     Object? status = null,
     Object? type = null,
-    Object? users = null,
+    Object? user = null,
     Object? createdAt = null,
     Object? date = null,
   }) {
@@ -94,10 +96,10 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      users: null == users
-          ? _value.users
-          : users // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as TaskUserModel,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -107,6 +109,14 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
           : date // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TaskUserModelCopyWith<$Res> get user {
+    return $TaskUserModelCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -124,9 +134,12 @@ abstract class _$$TaskModelImplCopyWith<$Res>
       String description,
       String status,
       String type,
-      List<String> users,
+      TaskUserModel user,
       int createdAt,
       String date});
+
+  @override
+  $TaskUserModelCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -145,7 +158,7 @@ class __$$TaskModelImplCopyWithImpl<$Res>
     Object? description = null,
     Object? status = null,
     Object? type = null,
-    Object? users = null,
+    Object? user = null,
     Object? createdAt = null,
     Object? date = null,
   }) {
@@ -170,10 +183,10 @@ class __$$TaskModelImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      users: null == users
-          ? _value._users
-          : users // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as TaskUserModel,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -195,10 +208,9 @@ class _$TaskModelImpl implements _TaskModel {
       required this.description,
       required this.status,
       required this.type,
-      required final List<String> users,
+      required this.user,
       required this.createdAt,
-      required this.date})
-      : _users = users;
+      required this.date});
 
   factory _$TaskModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskModelImplFromJson(json);
@@ -213,14 +225,8 @@ class _$TaskModelImpl implements _TaskModel {
   final String status;
   @override
   final String type;
-  final List<String> _users;
   @override
-  List<String> get users {
-    if (_users is EqualUnmodifiableListView) return _users;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_users);
-  }
-
+  final TaskUserModel user;
   @override
   final int createdAt;
   @override
@@ -228,7 +234,7 @@ class _$TaskModelImpl implements _TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel(id: $id, title: $title, description: $description, status: $status, type: $type, users: $users, createdAt: $createdAt, date: $date)';
+    return 'TaskModel(id: $id, title: $title, description: $description, status: $status, type: $type, user: $user, createdAt: $createdAt, date: $date)';
   }
 
   @override
@@ -242,7 +248,7 @@ class _$TaskModelImpl implements _TaskModel {
                 other.description == description) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality().equals(other._users, _users) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.date, date) || other.date == date));
@@ -250,8 +256,8 @@ class _$TaskModelImpl implements _TaskModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, status,
-      type, const DeepCollectionEquality().hash(_users), createdAt, date);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, description, status, type, user, createdAt, date);
 
   @JsonKey(ignore: true)
   @override
@@ -274,7 +280,7 @@ abstract class _TaskModel implements TaskModel {
       required final String description,
       required final String status,
       required final String type,
-      required final List<String> users,
+      required final TaskUserModel user,
       required final int createdAt,
       required final String date}) = _$TaskModelImpl;
 
@@ -292,7 +298,7 @@ abstract class _TaskModel implements TaskModel {
   @override
   String get type;
   @override
-  List<String> get users;
+  TaskUserModel get user;
   @override
   int get createdAt;
   @override
@@ -300,5 +306,162 @@ abstract class _TaskModel implements TaskModel {
   @override
   @JsonKey(ignore: true)
   _$$TaskModelImplCopyWith<_$TaskModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+TaskUserModel _$TaskUserModelFromJson(Map<String, dynamic> json) {
+  return _TaskUserModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$TaskUserModel {
+  String get displayName => throw _privateConstructorUsedError;
+  String? get photoUrl => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TaskUserModelCopyWith<TaskUserModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TaskUserModelCopyWith<$Res> {
+  factory $TaskUserModelCopyWith(
+          TaskUserModel value, $Res Function(TaskUserModel) then) =
+      _$TaskUserModelCopyWithImpl<$Res, TaskUserModel>;
+  @useResult
+  $Res call({String displayName, String? photoUrl});
+}
+
+/// @nodoc
+class _$TaskUserModelCopyWithImpl<$Res, $Val extends TaskUserModel>
+    implements $TaskUserModelCopyWith<$Res> {
+  _$TaskUserModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? displayName = null,
+    Object? photoUrl = freezed,
+  }) {
+    return _then(_value.copyWith(
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TaskUserModelImplCopyWith<$Res>
+    implements $TaskUserModelCopyWith<$Res> {
+  factory _$$TaskUserModelImplCopyWith(
+          _$TaskUserModelImpl value, $Res Function(_$TaskUserModelImpl) then) =
+      __$$TaskUserModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String displayName, String? photoUrl});
+}
+
+/// @nodoc
+class __$$TaskUserModelImplCopyWithImpl<$Res>
+    extends _$TaskUserModelCopyWithImpl<$Res, _$TaskUserModelImpl>
+    implements _$$TaskUserModelImplCopyWith<$Res> {
+  __$$TaskUserModelImplCopyWithImpl(
+      _$TaskUserModelImpl _value, $Res Function(_$TaskUserModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? displayName = null,
+    Object? photoUrl = freezed,
+  }) {
+    return _then(_$TaskUserModelImpl(
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TaskUserModelImpl implements _TaskUserModel {
+  const _$TaskUserModelImpl(
+      {required this.displayName, required this.photoUrl});
+
+  factory _$TaskUserModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TaskUserModelImplFromJson(json);
+
+  @override
+  final String displayName;
+  @override
+  final String? photoUrl;
+
+  @override
+  String toString() {
+    return 'TaskUserModel(displayName: $displayName, photoUrl: $photoUrl)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TaskUserModelImpl &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, displayName, photoUrl);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TaskUserModelImplCopyWith<_$TaskUserModelImpl> get copyWith =>
+      __$$TaskUserModelImplCopyWithImpl<_$TaskUserModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TaskUserModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _TaskUserModel implements TaskUserModel {
+  const factory _TaskUserModel(
+      {required final String displayName,
+      required final String? photoUrl}) = _$TaskUserModelImpl;
+
+  factory _TaskUserModel.fromJson(Map<String, dynamic> json) =
+      _$TaskUserModelImpl.fromJson;
+
+  @override
+  String get displayName;
+  @override
+  String? get photoUrl;
+  @override
+  @JsonKey(ignore: true)
+  _$$TaskUserModelImplCopyWith<_$TaskUserModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,3 +1,4 @@
+import 'package:dashboard/entities/session/model/model.dart';
 import 'package:dashboard/features/task/create/create.dart';
 import 'package:dashboard/features/user/create/create.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/drugstore/drugstore.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/services/hive_service.dart';
 import '../../widgets/widget.dart';
 
 final _navigationItems = [
@@ -27,12 +29,6 @@ final _navigationItems = [
     path: Routes.tasks.path,
     actions: [],
   ),
-  // _NavigationItem(
-  //   icon: const Icon(Icons.forum_outlined),
-  //   label: 'Сообщения',
-  //   path: Routes.messages.path,
-  //   actions: [],
-  // ),
   _NavigationItem(
     icon: const Icon(Icons.group),
     label: 'Сотрудники',
@@ -41,7 +37,7 @@ final _navigationItems = [
   ),
 ];
 
-class BaseLayout extends ConsumerWidget {
+class BaseLayout extends ConsumerStatefulWidget {
   const BaseLayout({
     super.key,
     required this.child,
@@ -51,26 +47,25 @@ class BaseLayout extends ConsumerWidget {
   final Widget child;
   final String currentPath;
 
+  @override
+  ConsumerState createState() => _BaseLayoutState();
+}
+
+class _BaseLayoutState extends ConsumerState<BaseLayout> {
+  late SessionUser sessionUser;
+
+  @override
+  void initState() {
+    super.initState();
+    sessionUser = HiveService.getSessionUser();
+  }
+
   Future<void> onRefreshData(WidgetRef ref) async {
     await Future.delayed(const Duration(milliseconds: 300));
   }
 
   List<Widget> _buildActions(BuildContext context) {
-    switch (currentPath) {
-      case '/indicators':
-        return [
-          // IconButton(
-          //   onPressed: () {
-          //     showDialog(
-          //       context: context,
-          //       builder: (context) {
-          //         return Container();
-          //       },
-          //     );
-          //   },
-          //   icon: const Icon(Icons.edit),
-          // )
-        ];
+    switch (widget.currentPath) {
       case '/users':
         return [
           IconButton(
@@ -118,7 +113,7 @@ class BaseLayout extends ConsumerWidget {
     }
   }
 
-  Widget _buildDesktopLayout(BuildContext context, WidgetRef ref, int currentIndex) {
+  Widget _buildDesktopLayout(BuildContext context, int currentIndex) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -129,7 +124,7 @@ class BaseLayout extends ConsumerWidget {
           ],
         ),
         actions: [
-          ..._buildActions(context),
+          if (sessionUser.role == 'Администратор') ..._buildActions(context),
           const SizedBox(width: 20),
         ],
       ),
@@ -150,13 +145,13 @@ class BaseLayout extends ConsumerWidget {
               );
             }).toList(),
           ),
-          Expanded(child: child),
+          Expanded(child: widget.child),
         ],
       ),
     );
   }
 
-  Widget _buildMobileLayout(BuildContext context, WidgetRef ref, int currentIndex) {
+  Widget _buildMobileLayout(BuildContext context, int currentIndex) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -167,13 +162,13 @@ class BaseLayout extends ConsumerWidget {
           ],
         ),
         actions: [
-          ..._buildActions(context),
+          if (sessionUser.role == 'Администратор') ..._buildActions(context),
           const SizedBox(width: 15),
         ],
       ),
       body: RefreshIndicator(
         onRefresh: () => onRefreshData(ref),
-        child: child,
+        child: widget.child,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -189,15 +184,15 @@ class BaseLayout extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = _navigationItems.indexWhere((item) => item.path == currentPath);
+  Widget build(BuildContext context) {
+    final currentIndex = _navigationItems.indexWhere((item) => item.path == widget.currentPath);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth > 768) {
-          return _buildDesktopLayout(context, ref, currentIndex);
+          return _buildDesktopLayout(context, currentIndex);
         }
-        return _buildMobileLayout(context, ref, currentIndex);
+        return _buildMobileLayout(context, currentIndex);
       },
     );
   }

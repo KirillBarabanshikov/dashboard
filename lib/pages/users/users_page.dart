@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../entities/user/user.dart';
+import '../../shared/ui/pagination.dart';
 
 class UsersPage extends ConsumerStatefulWidget {
   const UsersPage({super.key});
@@ -13,6 +14,8 @@ class UsersPage extends ConsumerStatefulWidget {
 class _UsersPageState extends ConsumerState<UsersPage> {
   final TextEditingController _searchController = TextEditingController();
   List<UserModel> _filteredDrugstores = [];
+  int _currentPage = 1;
+  final _limit = 8;
 
   void _filterDrugstores(String query) {
     final allDrugstores = ref.read(usersProvider).value;
@@ -33,14 +36,6 @@ class _UsersPageState extends ConsumerState<UsersPage> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // SliverToBoxAdapter(
-          //   child: FilterList(
-          //     items: const [Filters.block],
-          //     onChange: (filters) {
-          //       print(filters['block']);
-          //     },
-          //   ),
-          // ),
           SliverPadding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
             sliver: SliverToBoxAdapter(
@@ -58,6 +53,10 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                 _filteredDrugstores = data;
                 if (_searchController.text.isNotEmpty) {
                   _filterDrugstores(_searchController.text);
+                } else {
+                  final start = _limit * _currentPage - _limit;
+                  final end = start + _limit;
+                  _filteredDrugstores = _filteredDrugstores.sublist(start, end < _filteredDrugstores.length ? end : _filteredDrugstores.length);
                 }
 
                 return SliverGrid.builder(
@@ -81,10 +80,25 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                 return SliverToBoxAdapter(child: Text(error.toString()));
               },
               loading: () {
-                return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
+                return const SliverFillRemaining(hasScrollBody: false, child: Center(child: CircularProgressIndicator()));
               },
             ),
           ),
+          if (asyncUsers.hasValue)
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30),
+                  child: MyPagination(
+                    currentPage: _currentPage,
+                    pageNumber: (asyncUsers.value!.length / _limit).ceil(),
+                    onChange: (page) => setState(() => _currentPage = page),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

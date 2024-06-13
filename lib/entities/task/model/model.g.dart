@@ -13,7 +13,7 @@ _$TaskModelImpl _$$TaskModelImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       status: json['status'] as String,
       type: json['type'] as String,
-      users: (json['users'] as List<dynamic>).map((e) => e as String).toList(),
+      user: TaskUserModel.fromJson(json['user'] as Map<String, dynamic>),
       createdAt: (json['createdAt'] as num).toInt(),
       date: json['date'] as String,
     );
@@ -25,7 +25,19 @@ Map<String, dynamic> _$$TaskModelImplToJson(_$TaskModelImpl instance) =>
       'description': instance.description,
       'status': instance.status,
       'type': instance.type,
-      'users': instance.users,
+      'user': instance.user,
       'createdAt': instance.createdAt,
       'date': instance.date,
+    };
+
+_$TaskUserModelImpl _$$TaskUserModelImplFromJson(Map<String, dynamic> json) =>
+    _$TaskUserModelImpl(
+      displayName: json['displayName'] as String,
+      photoUrl: json['photoUrl'] as String?,
+    );
+
+Map<String, dynamic> _$$TaskUserModelImplToJson(_$TaskUserModelImpl instance) =>
+    <String, dynamic>{
+      'displayName': instance.displayName,
+      'photoUrl': instance.photoUrl,
     };

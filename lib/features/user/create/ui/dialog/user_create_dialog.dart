@@ -16,7 +16,7 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
   final _emailController = TextEditingController();
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
-  String _role = 'Пользователь';
+  String _role = 'Сотрудник';
   bool _isLoading = false;
 
   Future<void> _onSubmit() async {
@@ -59,7 +59,8 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Добавить подчинённого'),
+      insetPadding: const EdgeInsets.all(20),
+      title: const Text('Добавить сотрудника'),
       content: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 500),
         child: Form(
@@ -70,7 +71,14 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
               TextFormField(
                 controller: _nameController,
                 validator: (value) {
-                  if (value!.isEmpty) return 'Введите ФИО';
+                  if (value == null || value.isEmpty) {
+                    return 'Пожалуйста, введите ФИО';
+                  }
+                  String pattern = r"^[a-zA-Zа-яА-ЯёЁ\s]+$";
+                  RegExp regex = RegExp(pattern);
+                  if (!regex.hasMatch(value)) {
+                    return 'ФИО должно содержать только буквы и пробелы';
+                  }
                   return null;
                 },
                 decoration: const InputDecoration(labelText: 'ФИО'),
@@ -96,21 +104,17 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
                 decoration: const InputDecoration(labelText: 'Пароль'),
               ),
               const SizedBox(height: 15),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Роль',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: DropdownButtonFormField(
-                    value: _role,
-                    onChanged: (newValue) => _role = newValue!,
-                    items: ['Пользователь', 'Администратор'].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
+              DropdownButtonFormField(
+                value: _role,
+                onChanged: (newValue) => _role = newValue!,
+                items: ['Сотрудник', 'Администратор'].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                dropdownColor: Colors.white,
+                decoration: const InputDecoration(labelText: 'Роль'),
               ),
             ],
           ),
