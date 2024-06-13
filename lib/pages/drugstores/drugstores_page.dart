@@ -74,7 +74,7 @@ class _DrugstoresPageState extends ConsumerState<DrugstoresPage> {
                     maxCrossAxisExtent: 500,
                     mainAxisSpacing: 20,
                     crossAxisSpacing: 20,
-                    mainAxisExtent: 230,
+                    mainAxisExtent: 240,
                   ),
                   itemBuilder: (context, index) {
                     final drugstore = _filteredDrugstores[index];

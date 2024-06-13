@@ -18,6 +18,8 @@ class HiveService {
   }
 
   static Future<void> deleteSessionUser() async {
-    await Hive.box<SessionUser>('sessionUser').deleteAt(0);
+    if (Hive.box<SessionUser>('sessionUser').values.isNotEmpty) {
+      await Hive.box<SessionUser>('sessionUser').deleteAt(0);
+    }
   }
 }

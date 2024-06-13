@@ -50,12 +50,18 @@ final theme = ThemeData(
   appBarTheme: const AppBarTheme(
     color: Colors.white,
   ),
-  menuButtonTheme: const MenuButtonThemeData(style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.white))),
+  menuButtonTheme: const MenuButtonThemeData(
+      style: ButtonStyle(
+    backgroundColor: WidgetStatePropertyAll(Colors.white),
+  )),
   dialogBackgroundColor: Colors.white,
   dropdownMenuTheme: const DropdownMenuThemeData(
     menuStyle: MenuStyle(
       backgroundColor: WidgetStatePropertyAll(Colors.white),
       surfaceTintColor: WidgetStatePropertyAll(Colors.white),
     ),
+  ),
+  datePickerTheme: const DatePickerThemeData(
+    backgroundColor: Colors.white,
   ),
 );

@@ -70,11 +70,11 @@ class _TasksPageState extends ConsumerState<TasksPage> {
                   _filteredTasks = data;
                   if (selectedFilter.isNotEmpty) {
                     _filterTasks(selectedFilter);
+                  } else {
+                    final start = _limit * _currentPage - _limit;
+                    final end = start + _limit;
+                    _filteredTasks = _filteredTasks.sublist(start, end < _filteredTasks.length ? end : _filteredTasks.length);
                   }
-
-                  final start = _limit * _currentPage - _limit;
-                  final end = start + _limit;
-                  _filteredTasks = _filteredTasks.sublist(start, end < _filteredTasks.length ? end : _filteredTasks.length);
 
                   return SliverGrid.builder(
                     itemCount: _filteredTasks.length,

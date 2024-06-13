@@ -36,7 +36,7 @@ class SessionProvider {
       final user = await _firestore.collection('users').doc(userCredential.user?.uid).get();
 
       if (user['isBlocked']) {
-        signOut();
+        await signOut();
         throw FirebaseAuthException(code: '', message: 'Пользователь заблокирован');
       }
 
@@ -72,8 +72,8 @@ class SessionProvider {
   }
 
   Future<void> signOut() async {
-    await HiveService.deleteSessionUser();
     await _auth.signOut();
+    await HiveService.deleteSessionUser();
   }
 
   Future<void> edit(SessionUser user) async {

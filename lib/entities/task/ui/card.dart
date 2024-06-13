@@ -148,6 +148,7 @@ class TaskCard extends ConsumerWidget {
                     Expanded(child: Text(task.date)),
                     if (displayName == null)
                       MenuAnchor(
+                        style: const MenuStyle(backgroundColor: WidgetStatePropertyAll(Colors.white)),
                         builder: (context, controller, child) {
                           return IconButton(
                             onPressed: () => controller.isOpen ? controller.close() : controller.open(),

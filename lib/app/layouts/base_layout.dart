@@ -125,6 +125,7 @@ class _BaseLayoutState extends ConsumerState<BaseLayout> {
         ),
         actions: [
           if (sessionUser.role == 'Администратор') ..._buildActions(context),
+          if (sessionUser.role != 'Администратор' && widget.currentPath == '/tasks') ..._buildActions(context),
           const SizedBox(width: 20),
         ],
       ),
@@ -163,6 +164,7 @@ class _BaseLayoutState extends ConsumerState<BaseLayout> {
         ),
         actions: [
           if (sessionUser.role == 'Администратор') ..._buildActions(context),
+          if (sessionUser.role != 'Администратор' && widget.currentPath == '/tasks') ..._buildActions(context),
           const SizedBox(width: 15),
         ],
       ),

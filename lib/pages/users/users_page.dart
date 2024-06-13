@@ -1,3 +1,5 @@
+import 'package:dashboard/entities/session/model/model.dart';
+import 'package:dashboard/shared/services/hive_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,6 +18,13 @@ class _UsersPageState extends ConsumerState<UsersPage> {
   List<UserModel> _filteredDrugstores = [];
   int _currentPage = 1;
   final _limit = 8;
+  late SessionUser sessionUser;
+
+  @override
+  void initState() {
+    super.initState();
+    sessionUser = HiveService.getSessionUser();
+  }
 
   void _filterDrugstores(String query) {
     final allDrugstores = ref.read(usersProvider).value;
@@ -72,6 +81,7 @@ class _UsersPageState extends ConsumerState<UsersPage> {
                     return UserCard(
                       user: user,
                       key: ValueKey(user.uid),
+                      isAdmin: sessionUser.role == 'Администратор',
                     );
                   },
                 );

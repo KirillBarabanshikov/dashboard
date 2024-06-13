@@ -1,5 +1,7 @@
+import 'package:dashboard/entities/session/model/model.dart';
 import 'package:dashboard/entities/task/task.dart';
 import 'package:dashboard/entities/user/provider/provider.dart';
+import 'package:dashboard/shared/services/hive_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +22,7 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
   String type = 'НЕ ВАЖНО';
   TaskUserModel? user;
   bool _isLoading = false;
+  late SessionUser sessionUser;
 
   Future<void> _onSubmit() async {
     if (!_formKey.currentState!.validate()) return;
@@ -27,14 +30,15 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
     try {
       setState(() => _isLoading = true);
       if (widget.task == null) {
-        await ref.read(tasksProvider(displayName: null).notifier).create(
+        await ref.read(tasksProvider(displayName: sessionUser.role == 'Администратор' ? null : sessionUser.displayName).notifier).create(
               TaskModel(
                 id: '0',
                 title: _titleController.text.trim(),
                 description: _descController.text.trim(),
                 status: '0',
                 type: type,
-                user: user!,
+                user:
+                    sessionUser.role == 'Администратор' ? user! : TaskUserModel(displayName: sessionUser.displayName, photoUrl: sessionUser.photoUrl),
                 createdAt: DateTime.now().millisecondsSinceEpoch,
                 date: '',
               ),
@@ -47,7 +51,8 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
                 description: _descController.text.trim(),
                 status: widget.task!.status,
                 type: type,
-                user: user!,
+                user:
+                    sessionUser.role == 'Администратор' ? user! : TaskUserModel(displayName: sessionUser.displayName, photoUrl: sessionUser.photoUrl),
                 createdAt: widget.task!.createdAt,
                 date: widget.task!.date,
               ),
@@ -81,6 +86,7 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
       type = widget.task!.type;
       user = widget.task!.user;
     }
+    sessionUser = HiveService.getSessionUser();
   }
 
   @override
@@ -122,45 +128,47 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
                 decoration: const InputDecoration(labelText: 'Описание'),
               ),
               const SizedBox(height: 15),
-              asyncUsers.hasValue
-                  ? DropdownButtonFormField(
-                      onChanged: (value) => user = value,
-                      value: user,
-                      isExpanded: true,
-                      items: [
-                        for (final item in asyncUsers.value!)
-                          DropdownMenuItem(
-                            value: TaskUserModel(
-                              displayName: item.displayName,
-                              photoUrl: item.photoUrl,
-                            ),
-                            child: Flexible(
-                              child: Text(
-                                item.displayName,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          )
-                      ],
-                      validator: (value) {
-                        if (value == null) return 'Выберите содрудника';
-                        return null;
-                      },
-                      dropdownColor: Colors.white,
-                      decoration: const InputDecoration(labelText: 'Содрудник'),
-                    )
-                  : DropdownButtonFormField(
-                      onChanged: (value) {},
-                      value: user,
-                      items: const [],
-                      validator: (value) {
-                        if (value == null) return 'Выберите содрудника';
-                        return null;
-                      },
-                      dropdownColor: Colors.white,
-                      decoration: const InputDecoration(labelText: 'Содрудник'),
-                    ),
-              const SizedBox(height: 15),
+              sessionUser.role == 'Администратор'
+                  ? asyncUsers.hasValue
+                      ? DropdownButtonFormField(
+                          onChanged: (value) => user = value,
+                          value: user,
+                          isExpanded: true,
+                          items: [
+                            for (final item in asyncUsers.value!)
+                              DropdownMenuItem(
+                                value: TaskUserModel(
+                                  displayName: item.displayName,
+                                  photoUrl: item.photoUrl,
+                                ),
+                                child: Flexible(
+                                  child: Text(
+                                    item.displayName,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              )
+                          ],
+                          validator: (value) {
+                            if (value == null) return 'Выберите содрудника';
+                            return null;
+                          },
+                          dropdownColor: Colors.white,
+                          decoration: const InputDecoration(labelText: 'Содрудник'),
+                        )
+                      : DropdownButtonFormField(
+                          onChanged: (value) {},
+                          value: user,
+                          items: const [],
+                          validator: (value) {
+                            if (value == null) return 'Выберите содрудника';
+                            return null;
+                          },
+                          dropdownColor: Colors.white,
+                          decoration: const InputDecoration(labelText: 'Содрудник'),
+                        )
+                  : const SizedBox(),
+              sessionUser.role == 'Администратор' ? const SizedBox(height: 15) : const SizedBox(),
               DropdownButtonFormField(
                 dropdownColor: Colors.white,
                 value: type,

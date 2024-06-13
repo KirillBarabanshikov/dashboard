@@ -43,6 +43,11 @@ class Tasks extends _$Tasks {
     List<TaskModel> tasks = querySnapshot.docs.map((doc) {
       return TaskModel.fromJson({'id': doc.id, ...doc.data() as Map<String, Object?>});
     }).toList();
+
+    if (displayName != null) {
+      tasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    }
+
     return tasks;
   }
 

@@ -72,7 +72,7 @@ class _CreateUserDialogState extends ConsumerState<CreateUserDialog> {
                 controller: _nameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Пожалуйста, введите ФИО';
+                    return 'Введите ФИО';
                   }
                   String pattern = r"^[a-zA-Zа-яА-ЯёЁ\s]+$";
                   RegExp regex = RegExp(pattern);

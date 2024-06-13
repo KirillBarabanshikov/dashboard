@@ -16,8 +16,9 @@ class UserAvatar extends StatelessWidget {
     final shortName = splitName.length >= 2 ? splitName[0][0] + splitName[1][0] : splitName[0][0];
 
     return CircleAvatar(
+      backgroundColor: photoUrl != null ? Colors.transparent : Colors.orangeAccent.withOpacity(0.5),
       foregroundImage: photoUrl != null ? NetworkImage(photoUrl!) : null,
-      child: Text(shortName),
+      child: photoUrl != null ? const SizedBox() : Text(shortName),
     );
   }
 }

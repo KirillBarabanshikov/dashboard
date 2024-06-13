@@ -6,12 +6,10 @@ import '../../provider/provider.dart';
 import '../avatar/user_avatar.dart';
 
 class UserCard extends ConsumerWidget {
-  const UserCard({
-    super.key,
-    required this.user,
-  });
+  const UserCard({super.key, required this.user, required this.isAdmin});
 
   final UserModel user;
+  final bool isAdmin;
 
   void _onBlock(WidgetRef ref) {
     ref.read(usersProvider.notifier).block(user.uid);
@@ -44,19 +42,21 @@ class UserCard extends ConsumerWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                user.isBlocked
-                    ? IconButton(
-                        onPressed: () => _onUnblock(ref),
-                        icon: const Icon(Icons.lock_outlined),
-                        color: Colors.red,
-                        tooltip: 'Разблокировать',
-                      )
-                    : IconButton(
-                        onPressed: () => _onBlock(ref),
-                        icon: const Icon(Icons.lock_open_outlined),
-                        color: Colors.green,
-                        tooltip: 'Заблокировать',
-                      ),
+                isAdmin
+                    ? user.isBlocked
+                        ? IconButton(
+                            onPressed: () => _onUnblock(ref),
+                            icon: const Icon(Icons.lock_outlined),
+                            color: Colors.red,
+                            tooltip: 'Разблокировать',
+                          )
+                        : IconButton(
+                            onPressed: () => _onBlock(ref),
+                            icon: const Icon(Icons.lock_open_outlined),
+                            color: Colors.green,
+                            tooltip: 'Заблокировать',
+                          )
+                    : const SizedBox(),
               ],
             ),
             const SizedBox(height: 20),

@@ -26,6 +26,7 @@ class _UserMenuState extends ConsumerState<UserMenu> {
   @override
   Widget build(BuildContext context) {
     return MenuAnchor(
+      style: const MenuStyle(backgroundColor: WidgetStatePropertyAll(Colors.white)),
       builder: (context, controller, child) {
         return IconButton(
           onPressed: () => controller.isOpen ? controller.close() : controller.open(),

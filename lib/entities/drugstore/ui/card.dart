@@ -94,6 +94,7 @@ class DrugstoreCard extends ConsumerWidget {
                     ),
                     if (isAdmin)
                       MenuAnchor(
+                        style: const MenuStyle(backgroundColor: WidgetStatePropertyAll(Colors.white)),
                         builder: (context, controller, child) {
                           return IconButton(
                             onPressed: () => controller.isOpen ? controller.close() : controller.open(),
