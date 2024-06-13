@@ -141,11 +141,9 @@ class _CreateUserDialogState extends ConsumerState<CreateTaskDialog> {
                                   displayName: item.displayName,
                                   photoUrl: item.photoUrl,
                                 ),
-                                child: Flexible(
-                                  child: Text(
-                                    item.displayName,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                child: Text(
+                                  item.displayName,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               )
                           ],
