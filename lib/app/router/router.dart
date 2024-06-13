@@ -23,14 +23,7 @@ final _authenticatedPaths = [
 
 @riverpod
 GoRouter router(RouterRef ref) {
-  // final ValueNotifier<User?> authStateNotifier = ValueNotifier(null);
-  //
-  // ref.listen(authStateChangesProvider, (_, state) {
-  //   authStateNotifier.value = state.value;
-  // });
-
   final router = GoRouter(
-    // refreshListenable: authStateNotifier,
     redirect: (context, state) {
       final isAuth = ref.read(firebaseAuthProvider).currentUser != null;
       if (isAuth) {
