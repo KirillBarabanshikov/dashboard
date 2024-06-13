@@ -223,7 +223,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                                                     fit: BoxFit.cover,
                                                   )
                                                 : Image.asset(
-                                                    kIsWeb ? 'images/profile.png' : 'assets/images/profile.png',
+                                                    'images/profile.png',
                                                     fit: BoxFit.cover,
                                                   ),
                                       ),
@@ -400,7 +400,7 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
                                     fit: BoxFit.cover,
                                   )
                                 : Image.asset(
-                                    kIsWeb ? 'images/profile.png' : 'assets/images/profile.png',
+                                    'images/profile.png',
                                     fit: BoxFit.cover,
                                   ),
                       ),

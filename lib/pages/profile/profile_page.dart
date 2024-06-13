@@ -59,7 +59,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     height: 200,
                     child: sessionUser?.photoUrl == null
                         ? Image.asset(
-                            kIsWeb ? 'images/profile.png' : 'assets/images/profile.png',
+                            'images/profile.png',
                             fit: BoxFit.cover,
                           )
                         : Image.network(
@@ -140,7 +140,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     height: 200,
                     child: sessionUser?.photoUrl == null
                         ? Image.asset(
-                            kIsWeb ? 'images/profile.png' : 'assets/images/profile.png',
+                            'images/profile.png',
                             fit: BoxFit.cover,
                           )
                         : Image.network(
