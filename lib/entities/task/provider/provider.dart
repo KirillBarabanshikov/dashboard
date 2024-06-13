@@ -33,8 +33,6 @@ class Tasks extends _$Tasks {
     // ref.cacheFor(const Duration(minutes: 1));
     late QuerySnapshot querySnapshot;
 
-    print(displayName);
-
     if (displayName == null) {
       querySnapshot = await ref.read(firebaseFirestoreProvider).collection('tasks').orderBy('createdAt', descending: true).get();
     } else {

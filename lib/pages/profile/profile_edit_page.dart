@@ -110,7 +110,9 @@ class _ProfileEditPageState extends ConsumerState<ProfileEditPage> {
         allowedExtensions: ['jpg', 'jpeg', 'png', 'webp'],
       );
 
-      if (result?.files.first.extension == null || !['jpg', 'jpeg', 'png', 'webp'].contains(result?.files.first.extension)) {
+      if (result?.files.first.extension == null) return;
+
+      if (!['jpg', 'jpeg', 'png', 'webp'].contains(result?.files.first.extension)) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
